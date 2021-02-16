@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 <template>
 <div id="posts">
 	<div class="all-posts">
@@ -37,7 +38,7 @@
 							</div>
 						</div>
 						<div id="hide-button">
-							<button>hide</button>
+							<button @click="showModal(true)">hide</button>
 						</div>
 						<div id="report-button">
 							<button>report</button>
@@ -59,19 +60,26 @@
 			</div>
 		</div>
 	</div>
+	<div v-if="show===true">
+		<AlertModal @showModal="showModal" :show="show"></AlertModal>
+	</div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+import AlertModal from '../Modal/AlertModal'
 export default {
 	name: "Posts",
 	props: ['posts'],
-
+	components:{
+     AlertModal
+	},
 	data() {
 		return {
 			toggle: [false, false, false, false, false],
 			commentBox: ["","","","",""],
+			show: false,
 		};
 	},
 	methods: {
@@ -82,7 +90,7 @@ export default {
 			this.$emit("increment", upvotes, index)
 			}
 			else{
-				alert("Please SignIn")
+				this.showModal(true)
 			}
 		},
 		downvote(downvotes, index) {
@@ -90,14 +98,14 @@ export default {
 			this.$emit("decrement", downvotes, index)
 			}
 			else{
-				alert("Please SignIn")
+				this.showModal(true)
 			}
 
 		},
 		postComment(post,index){
 
 			if(localStorage.isAuthenticated !== "true"){
-				alert("Please Sign In")
+				this.showModal(true)
 			}
 
 			else if(this.commentBox[index]){
@@ -133,7 +141,13 @@ export default {
 				post[key]=comments;
 				console.log(post.comments)
 			}
+		},
+		showModal(value){
+			this.show = value
+			console.log(this.show)
 		}
+		
+		
 	}
 };
 </script>
