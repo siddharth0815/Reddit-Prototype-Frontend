@@ -51,8 +51,8 @@
 							</div> -->
 						</div>
 						<div id="comment-box">
-								<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
-								<button id="submit-button" @click="postComment(post,index)">submit</button>
+							<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
+							<button id="submit-button" @click="postComment(post,index)">submit</button>
 						</div>
 					</div>
 				</div>
@@ -76,10 +76,8 @@ export default {
 	},
 	methods: {
 		upvote(upvotes, index) {
-			console.log(localStorage.isAuthenticated==="true", typeof(localStorage.isAuthenticated))
 			if(localStorage.isAuthenticated === "true"){
-			console.log(upvotes,index)
-			this.$emit("increment", upvotes, index)
+				this.$emit("increment", upvotes, index)
 			}
 			else{
 				alert("Please SignIn")
@@ -87,19 +85,16 @@ export default {
 		},
 		downvote(downvotes, index) {
 			if(localStorage.isAuthenticated === "true"){
-			this.$emit("decrement", downvotes, index)
+				this.$emit("decrement", downvotes, index)
 			}
 			else{
 				alert("Please SignIn")
 			}
-
 		},
 		postComment(post,index){
-
 			if(localStorage.isAuthenticated !== "true"){
 				alert("Please Sign In")
 			}
-
 			else if(this.commentBox[index]){
 				const requestBody = {
 					contentBody : this.commentBox[index],
@@ -108,10 +103,7 @@ export default {
 				axios
 				.post("http://localhost:8080/api/content/create/77/78",requestBody)
 				.then(response=>{console.log(response)})
-				//console.log("first", post.comments)
 				post.comments.push(this.commentBox[index]);
-				
-				//console.log("second", post.comments);
 				this.commentBox[index]="";
 			}
 			else{
@@ -121,17 +113,13 @@ export default {
 		async displayComments(post, index) {
 			const key = "comments";
 			const comments = [];
-			// console.log(this.toggle[index], post.id, index);
 			this.toggle[index] = !this.toggle[index];
 			if(this.toggle[index])
 			{
 				const resultList = await axios.get('http://localhost:8080/api/content/'+post.id)
-				for (var i in resultList.data){
-					// console.log(resultList.data[i]);
+				for (var i in resultList.data)
 					comments.push(resultList.data[i].contentBody);
-				}
 				post[key]=comments;
-				console.log(post.comments)
 			}
 		}
 	}

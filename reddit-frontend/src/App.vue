@@ -1,8 +1,8 @@
 <template>
 <div>
-<div class="navbar">
-<Navbar></Navbar>
-</div>
+	<div class="navbar">
+		<Navbar></Navbar>
+	</div>
 	<div id="app">
 		<div>
 			<Cards></Cards>
@@ -30,24 +30,26 @@ export default {
 	components: {
 		Posts,
 		Sidebar,
-		Cards,Navbar
+		Cards,
+		Navbar
 	},
-	data(){
-		return{
-		posts: [],
-	}},
+	data() {
+		return {
+			posts: [],
+		}
+	},
 	methods: {
 		upvote(upvotes, index) {
 			axios
 			.post('http://localhost:8080/api/content/upvote/'+this.posts[index].id)
-			.then(response=>{console.log(response)})
-			this.posts[index].upvotes+=1
+			.then(response=>{console.log(response)});
+			this.posts[index].upvotes++;
 		},
 		downvote(downvotes, index) {
 			axios
 			.post('http://localhost:8080/api/content/downvote/'+this.posts[index].id)
-			.then(response=>{console.log(response)})
-			this.posts[index].downvotes+=1
+			.then(response=>{console.log(response)});
+			this.posts[index].downvotes++;
 		},
 	},
 	mounted(){

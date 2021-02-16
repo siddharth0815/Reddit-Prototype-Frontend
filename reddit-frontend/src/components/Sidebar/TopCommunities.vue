@@ -5,7 +5,7 @@
 		</div>
 		<ol>
 			<li class="list" :key="item.id" v-for="(item,index) in communities">
-				<TopItem :item="item" :index="index"></TopItem>
+				<TopItem :item="item" :index="index" @upvote="upvote" @downvote="downvote"></TopItem>
 			</li>
 		</ol>
 	</div>
@@ -13,14 +13,49 @@
 
 <script>
 import TopItem from "./TopItem"
+import axios from 'axios'
 
 export default {
 	name: 'TopCommunities',
 	components: {
 		TopItem
 	},
-    props: ["communities"],
-   
+	data() {
+		return {
+			communities: null
+		}
+	},
+	mounted() {
+		axios
+		.get('http://localhost:8080/api/community/top?count=5')
+		.then( response => (this.communities = response.data) )
+	},
+	methods: {
+		async upvote(index) {
+			if( localStorage.isAuthenticated === "true" ) {
+				await axios
+				.post('http://localhost:8080/api/community/upvote/'+this.communities[index].id)
+				.then(response => (console.log(response)));
+				this.communities[index].upvotes++;
+				if( index != 0 && this.communities[index].upvotes > this.communities[index-1].upvotes )
+					this.$emit("forceRerender");
+			}
+			else {
+				alert("Please SignIn");
+			}
+		},
+		async downvote(index) {
+			if( localStorage.isAuthenticated === "true" ) {
+				await axios
+				.post('http://localhost:8080/api/community/downvote/'+this.communities[index].id)
+				.then(response => (console.log(response)));
+				this.communities[index].downvotes++;
+			}
+			else {
+				alert("Please SignIn");
+			}
+		}
+	}
 }
 </script>
 
