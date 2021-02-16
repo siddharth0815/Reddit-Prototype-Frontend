@@ -76,7 +76,8 @@ export default {
 	},
 	methods: {
 		upvote(upvotes, index) {
-			if(localStorage.isAuthenticated === true){
+			console.log(localStorage.isAuthenticated==="true", typeof(localStorage.isAuthenticated))
+			if(localStorage.isAuthenticated === "true"){
 			console.log(upvotes,index)
 			this.$emit("increment", upvotes, index)
 			}
@@ -85,7 +86,7 @@ export default {
 			}
 		},
 		downvote(downvotes, index) {
-			if(localStorage.isAuthenticated === true){
+			if(localStorage.isAuthenticated === "true"){
 			this.$emit("decrement", downvotes, index)
 			}
 			else{
@@ -94,8 +95,12 @@ export default {
 
 		},
 		postComment(post,index){
-			
-			if(this.commentBox[index]){
+
+			if(localStorage.isAuthenticated !== "true"){
+				alert("Please Sign In")
+			}
+
+			else if(this.commentBox[index]){
 				const requestBody = {
 					contentBody : this.commentBox[index],
 					parentId: post.id,
@@ -105,8 +110,12 @@ export default {
 				.then(response=>{console.log(response)})
 				//console.log("first", post.comments)
 				post.comments.push(this.commentBox[index]);
+				
 				//console.log("second", post.comments);
 				this.commentBox[index]="";
+			}
+			else{
+				alert("Please write a comment")
 			}
 		},
 		async displayComments(post, index) {

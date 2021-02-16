@@ -1,6 +1,6 @@
 <template>
 <div class="navbar">
-    <div class="auth-buttons" v-if="isAuthenticated===null">
+    <div class="auth-buttons" v-if="isAuthenticated===false">
         <div class="login-register-button">
            <button class="login-button" @click="showLoginModalFunc()">Login</button>
            <button class="register-button" @click="showRegisterModalFunc()">Register</button>
@@ -10,7 +10,7 @@
         <button class="logout-button" @click="handleLogout()">Logout</button>
     </div>
 
-           <div id= "login" v-if="showLoginModal===true && isAuthenticated === null" class="modal">
+           <div id= "login" v-if="showLoginModal===true && isAuthenticated === false" class="modal">
             <div class="modalContent">
                 <div id ="modalHeader">
                     <h2>Login</h2>
@@ -27,7 +27,7 @@
                 <hr>
             </div>
         </div>
-            <div id= "register" v-if="showRegisterModal===true && isAuthenticated === null" class="modal">
+            <div id= "register" v-if="showRegisterModal===true && isAuthenticated === false" class="modal">
             <div class="modalContent">
                 <div id ="modalHeader">
                     <h2>Register</h2>
@@ -57,7 +57,7 @@ export default {
 data()
 {
 return{
-  isAuthenticated: null,
+  isAuthenticated: false,
   userId:null,
   userName:null,
   showLoginModal: false,
@@ -69,14 +69,25 @@ return{
   registerEmail: null,
   
 }},
+mounted(){
+    
+    if(localStorage.isAuthenticated != null){
+    
+    this.isAuthenticated = localStorage.isAuthenticated == "true"
+    }
+  
+},
 methods:{
+ 
    showLoginModalFunc(){  
+    this.showRegisterModal=false;
     this.showLoginModal=true;
    },
    closeLoginModalFunc(){
        this.showLoginModal=false;
    },
    showRegisterModalFunc(){
+       this.showLoginModal=false;
     this.showRegisterModal=true;
    },
    closeRegisterModalFunc(){
@@ -84,10 +95,10 @@ methods:{
    },
    handleLogout(){
        console.log("hello logout")
-       this.isAuthenticated = null
-       localStorage.removeItem(localStorage.isAuthenticated) 
-       localStorage.removeItem(localStorage.userName) 
-       localStorage.removeItem(localStorage.userId) 
+       this.isAuthenticated = false
+       localStorage.isAuthenticated = false
+       localStorage.userName = null 
+       localStorage.userId=null
    },
    async registerSubmit(){
        console.log("register")
@@ -108,7 +119,7 @@ methods:{
        }
        try{
        const response = await axios.post("http://localhost:8080/user/auth/login",requestBody)
-       console.log(response);
+       console.log(response.data);
        this.isAuthenticated = true
        localStorage.isAuthenticated = true 
        localStorage.userName = response.data.userName
@@ -122,6 +133,7 @@ methods:{
 
    }
 }
+
 }
 
 </script>

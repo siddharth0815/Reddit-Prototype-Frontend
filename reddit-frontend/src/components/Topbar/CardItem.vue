@@ -1,11 +1,8 @@
 <template>
 	<div id="cardItem">
-		<br/>
-		<h1>{{card.userName}}</h1>
-		<br/>
-		<small>{{card.contentBody.substr(0,25)}}</small>
-		<br/>
-		<small>r/{{card.communityName}} and more</small>
+		<div class="topmost">{{card.userName}}</div>
+		<div class="middle">{{card.contentBody.substr(0,25)}}</div>
+		<div class="bottom">r/{{card.communityName}} and more</div>
 	</div>
 </template>
 
@@ -18,22 +15,36 @@ export default {
 	
 <style scoped>
 #cardItem {
-	border-color: black;
-	border-width: thin;
-	border-style: solid;
 	border-radius: 10px 10px 10px 10px;
+	height: 70px;
+	text-align: left;
 }
-p {
-	color: white;
-	line-height: 0em;
+
+.topmost {
+  color: white;
+  padding: 0px;
+  font-size: 20px;
+  margin-top: 70px;
+  margin-left: 10px;
+  margin-bottom: 0px;
 }
-h1 {
-	color: white;
-	font-size: 20px;
-	display: inline;
+
+.middle {
+  color: white;
+  padding: 0px;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-left: 10px;
+  margin-bottom: 0px;
 }
-small {
-	font-size: 18px;
-	color: white;
+
+.bottom {
+  color: white;
+  padding: 10px;
+  font-size: 12px;
+  margin-top: 0px;
+  margin-left: 20px;
+  margin-bottom: 0px;
 }
+
 </style>
