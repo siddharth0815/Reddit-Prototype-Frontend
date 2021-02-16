@@ -1,14 +1,13 @@
 <template>
 	<div id="sidebar">
-		<TopCommunities :communities="topCommunities"></TopCommunities>
-		<TrendingCommunities :communities="trendingCommunities"></TrendingCommunities>
+		<TopCommunities @forceRerender="topRerender" :key="topKey"></TopCommunities>
+		<TrendingCommunities @forceRerender="trendingRerender" :key="trendingKey"></TrendingCommunities>
 	</div>
 </template>
 
 <script>
 import TopCommunities from './TopCommunities.vue'
 import TrendingCommunities from './TrendingCommunities.vue'
-import axios from 'axios'
 // import HelloWorld from './components/HelloWorld.vue'
 
 export default {
@@ -19,18 +18,17 @@ export default {
 	},
 	data() {
 		return {
-			product: null,
-			topCommunities: null,
-			trendingCommunities: null
+			topKey: 0,
+			trendingKey: 0
 		}
 	},
-	mounted() {
-		axios
-		.get('http://localhost:8080/api/community/top?count=5')
-		.then( response => (this.topCommunities = response.data) )
-		axios
-		.get('http://localhost:8080/api/community/trending?count=5')
-		.then( response => (this.trendingCommunities = response.data) )
+	methods: {
+		topRerender() {
+			this.topKey++;
+		},
+		trendingRerender() {
+			this.trendingKey++;
+		}
 	}
 }
 </script>

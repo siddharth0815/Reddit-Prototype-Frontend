@@ -4,14 +4,19 @@
 			<span class="title"> r/{{ item.title }} </span>
 			<span class="small"> {{item.members}} members </span>
 		</div>
-		<button class="join">Join</button>
+		<button class="join" @click="join(item.id, index)">Join</button>
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'TrendingItem',
-	props: ["item", "index"]
+	props: ["item", "index"],
+	methods: {
+		join(id, index) {
+			this.$emit("follow", localStorage.userId, id, index);
+		}
+	}
 }
 </script>
 
