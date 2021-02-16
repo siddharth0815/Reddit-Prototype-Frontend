@@ -16,31 +16,23 @@ export default {
 <style scoped>
 #cardItem {
 	border-radius: 10px 10px 10px 10px;
-	height: 70px;
 	text-align: left;
+	color: white;
 }
 .topmost {
-	color: white;
-	padding: 0px;
+	font-weight: 800;
 	font-size: 20px;
-	margin-top: 70px;
+	margin-top: 90px;
 	margin-left: 10px;
-	margin-bottom: 0px;
 }
 .middle {
-	color: white;
-	padding: 0px;
+	font-weight: 700;
 	font-size: 16px;
-	margin-top: 0px;
 	margin-left: 10px;
-	margin-bottom: 0px;
 }
 .bottom {
-	color: white;
-	padding: 10px;
+	font-weight: 600;
 	font-size: 12px;
-	margin-top: 0px;
-	margin-left: 20px;
-	margin-bottom: 0px;
+	margin-left: 25px;
 }
 </style>

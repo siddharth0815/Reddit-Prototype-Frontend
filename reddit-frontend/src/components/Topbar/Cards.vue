@@ -1,7 +1,7 @@
 <template>
 <div class="flex-container">
 	<div v-bind:key="card.id" v-for="card in cards" :style="bgImage(card.imageURL)">	
-		<CardItem v-bind:card="card"/>
+	      <CardItem v-bind:card="card"/>		
 	</div>
 </div>
 </template>
@@ -38,6 +38,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-content: start;
+	height: 160px;
 }
 .flex-container > div {
 	font-size: 30px;
