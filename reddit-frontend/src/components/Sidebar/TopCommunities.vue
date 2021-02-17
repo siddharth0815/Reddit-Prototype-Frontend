@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div id="topCommunities">
 		<div class="header">
 			<h2 class="banner"> Top Communities </h2>
@@ -9,20 +10,27 @@
 			</li>
 		</ol>
 	</div>
+	<div v-if="show===true">
+		<AlertModal @showModal="showModal" :show="show"></AlertModal>
+	</div>
+	</div>
 </template>
 
 <script>
 import TopItem from "./TopItem"
 import axios from 'axios'
+import AlertModal from '../Modal/AlertModal'
 
 export default {
 	name: 'TopCommunities',
 	components: {
-		TopItem
+		TopItem,
+		AlertModal
 	},
 	data() {
 		return {
-			communities: null
+			communities: null,
+			show: false
 		}
 	},
 	mounted() {
@@ -41,7 +49,7 @@ export default {
 					this.$emit("forceRerender");
 			}
 			else {
-				alert("Please SignIn");
+				this.showModal(true)
 			}
 		},
 		async downvote(index) {
@@ -52,9 +60,14 @@ export default {
 				this.communities[index].downvotes++;
 			}
 			else {
-				alert("Please SignIn");
+				this.showModal(true)
 			}
+		},
+		showModal(value){
+			this.show = value
+			console.log(this.show)
 		}
+
 	}
 }
 </script>

@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div id="hide-button">
-							<button @click="showModal(true)">hide</button>
+							<button>hide</button>
 						</div>
 						<div id="report-button">
 							<button>report</button>
@@ -63,23 +63,30 @@
 	<div v-if="show===true">
 		<AlertModal @showModal="showModal" :show="show"></AlertModal>
 	</div>
+	<div v-if="showLogin===true">
+		<LoginModal @showLoginModal="showLoginModal" :showLogin="showLogin"></LoginModal>
+	</div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import AlertModal from '../Modal/AlertModal'
+import LoginModal from '../Modal/LoginModal'
+//import RegisterModal from '../Modal/RegisterModal'
 export default {
 	name: "Posts",
 	props: ['posts'],
 	components:{
-     AlertModal
+	 AlertModal,
+	 LoginModal
 	},
 	data() {
 		return {
 			toggle: [false, false, false, false, false],
 			commentBox: ["","","","",""],
 			show: false,
+			showLogin: false,
 		};
 	},
 	methods: {
@@ -133,6 +140,9 @@ export default {
 		showModal(value){
 			this.show = value
 			console.log(this.show)
+		},
+		showLoginModal(value){
+			this.showLogin = value
 		}
 		
 		

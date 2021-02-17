@@ -1,4 +1,5 @@
 <template>
+<div>
 	<div id="trendingCommunities">
 		<ol>
 			<li class="list" :key="item.id" v-for="(item,index) in communities">
@@ -6,10 +7,15 @@
 			</li>
 		</ol>
 	</div>
+	<div v-if="show===true">
+		<AlertModal @showModal="showModal" :show="show"></AlertModal>
+	</div>
+</div>
 </template>
 
 <script>
 import TrendingItem from "./TrendingItem"
+import AlertModal from "../Modal/AlertModal"
 import axios from 'axios'
 
 const url = 'http://localhost:8080/api/';
@@ -17,11 +23,14 @@ const url = 'http://localhost:8080/api/';
 export default {
 	name: 'TrendingCommunities',
 	components: {
-		TrendingItem
+		TrendingItem,
+		AlertModal
+
 	},
 	data() {
 		return {
-			communities: null
+			communities: null,
+			show: false
 		}
 	},
 	mounted() {
@@ -43,9 +52,14 @@ export default {
 				}
 			}
 			else {
-				alert("Please SignIn");
+				this.showModal(true)
 			}
+		},
+		showModal(value){
+			this.show = value
+			console.log(this.show)
 		}
+
 	}
 }
 </script>
