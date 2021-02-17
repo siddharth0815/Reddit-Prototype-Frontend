@@ -1,111 +1,101 @@
 <template>
 <div>
-<transition name="fade" appear>
-  <div class="modal-overlay" v-if="showModal"></div>
- </transition>
- <transition name="slide" appear>
-  <div class="modal" v-if="showModal">
-   <h2>Login</h2>
-   <form id="login-form" >
-      <!-- name -->
-      <div class="field">
-        <label class="label">Username</label>
-        <input type="text" v-model="loginUsername" class="input">
-      </div>
-
-      <!-- email -->
-      <div class="field">
-        <label class="label">Password</label>
-        <input type="password" v-model="loginPassword" class="input">
-      </div>
-
-      <!-- submit button -->
-      <div class="submit-button">
-        <button type="submit" class="button is-danger" @click="loginSubmit">Submit</button>
-        </div>
-    </form>
-         <button class="button" @click="showLoginModalFunc()">
-        Close
-      </button>
-      
-  
-  </div>
- </transition>
- </div>
+	<transition name="fade" appear>
+		<div class="modal-overlay" v-if="showModal"></div>
+	</transition>
+	<transition name="slide" appear>
+		<div class="modal" v-if="showModal">
+			<h2>Login</h2>
+			<form id="login-form" >
+				<!-- name -->
+				<div class="field">
+					<label class="label">Username</label>
+					<input type="text" v-model="loginUsername" class="input">
+				</div>
+				<!-- email -->
+				<div class="field">
+					<label class="label">Password</label>
+					<input type="password" v-model="loginPassword" class="input">
+				</div>
+				<!-- submit button -->
+				<div class="submit-button">
+					<button type="submit" class="button is-danger" @click="loginSubmit">Submit</button>
+				</div>
+			</form>
+			<button class="button" @click="showLoginModalFunc()">Close</button>
+		</div>
+	</transition>
+</div>
 </template>
 
 <script>
 import axios from 'axios';
 export default {
-    name: 'LoginModal',
-    props: ['showLoginModal','isAuthenticated'],
-    data()
-    {
-      return{
-        showModal: false,
-        loginUsername: null,
-        loginPassword: null,
-      }
-    },
-    methods:{
-      showLoginModalFunc(){
-        this.showModal = false
-        this.$emit("showLoginModalFunc",false)
-      },
-      async loginSubmit() {
-        const requestBody = {
-          userName: this.loginUsername,
-          password: this.loginPassword
-        };
-			try{
+	name: 'LoginModal',
+	props: ['showLoginModal','isAuthenticated'],
+	data() {
+		return {
+			showModal: false,
+			loginUsername: null,
+			loginPassword: null,
+		}
+	},
+	methods:{
+		showLoginModalFunc() {
+			this.showModal = false
+			this.$emit("showLoginModalFunc",false)
+		},
+		async loginSubmit() {
+			const requestBody = {
+				userName: this.loginUsername,
+				password: this.loginPassword
+			};
+			try {
 				const response = await axios.post("http://localhost:8080/user/auth/login",requestBody);
-        this.$emit("toggleIsAuthenticated")
-        localStorage.isAuthenticated = true;
-        localStorage.userName = response.data.userName;
-        localStorage.userId = response.data.id;
-        alert("Login Successfull")        
+				this.$emit("toggleIsAuthenticated")
+				localStorage.isAuthenticated = true;
+				localStorage.userName = response.data.userName;
+				localStorage.userId = response.data.id;
+				alert("Login Successfull");
 			}
 			catch(e){
-				alert("Invalid Credentials")
+				alert("Invalid Credentials");
 			}
 		}
-
-},
-
-mounted(){
-   this.showModal = this.showLoginModal
-}
-
+	},
+	mounted() {
+		this.showModal = this.showLoginModal;
+	}
 }
 </script>
 
 <style scoped>
-.field{
-    padding: 10px;
+.field {
+	padding: 10px;
 }
-.label{
-    padding-right: 10px;
+.label {
+	padding-right: 10px;
 }
 .field-button{
- display:flex;
+	display:flex;
 }
 .button {
- appearance: none;
- outline: none;
- border: none;
- background: none;
- cursor: pointer;
- display: inline-block;
- padding: 15px 25px;
- background-image: linear-gradient(to right, #CC2E5D, #FF5858);
- border-radius: 8px;
- 
- color: #FFF;
- font-size: 18px;
- font-weight: 700;
- 
- box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
- transition: 0.4s ease-out;
+	appearance: none;
+	outline: none;
+	border: none;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	padding: 15px 25px;
+	background-image: linear-gradient(to right, #CC2E5D, #FF5858);
+	border-radius: 8px;
+
+	color: #FFF;
+	font-size: 18px;
+	font-weight: 700;
+
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
+	transition: 0.4s ease-out;
 }
 
 .modal-overlay {

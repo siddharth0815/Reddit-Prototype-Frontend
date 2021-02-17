@@ -208,7 +208,6 @@ textarea{
 }
 .posts {
 	background-color: #d3d3d3;
-	margin-left: 40px; 
 }
 .votes-image {
 	display: flex;
@@ -275,9 +274,6 @@ textarea{
 	width: 600px;
 	background-color: white;
 	border-radius: 10px 10px 10px 10px;
-}
-.posts{
-	margin-left:10rem
 }
 .all-posts{
 	background-color: #DAE0E6;

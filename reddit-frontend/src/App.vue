@@ -76,6 +76,7 @@ html, body {
 }
 .bottom {
 	display: flex;
+	justify-content: center;
 }
 .sidebar {
 	padding-top: 20px;
