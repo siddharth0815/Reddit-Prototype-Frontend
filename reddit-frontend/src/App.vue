@@ -88,6 +88,7 @@ html, body {
 }
 .cards-container {
 	margin: 0px 186px 0px 186px;
+	padding: 16px 24px 0;
 }
 .cards-title {
 	text-align: left;
@@ -95,6 +96,5 @@ html, body {
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 18px;
-	margin-top: 40px;
 }
 </style>
