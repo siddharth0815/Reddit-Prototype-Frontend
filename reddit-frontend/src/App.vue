@@ -1,10 +1,12 @@
 <template>
-<div>
-	<div class="navbar">
-		<Navbar></Navbar>
-	</div>
 	<div id="app">
-		<div>
+		<div class="navbar">
+			<Navbar></Navbar>
+		</div>
+		<div class="cards-container">
+			<div>
+				<div class="cards-title">Trending today</div>
+			</div>
 			<Cards></Cards>
 		</div>
 		<div class="bottom">
@@ -14,7 +16,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 </template>
 
 <script>
@@ -61,6 +62,10 @@ export default {
 </script>
 
 <style>
+html, body {
+  margin: 0px !important;
+  padding: 0px !important;
+}
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -77,6 +82,18 @@ export default {
 	padding-left: 0px;
 }
 .navbar{
-	background-color: #DAE0E6;
+	background-color: white;
+	border: 0;
+}
+.cards-container {
+	margin: 0px 186px 0px 186px;
+}
+.cards-title {
+	text-align: left;
+	font-family: IBMPlexSans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	margin-top: 40px;
 }
 </style>

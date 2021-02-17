@@ -1,33 +1,22 @@
 <template>
-<div>
-<div class="navbar" @click="showRegisterModalFunc(false)"></div>
-	<div class="auth-buttons" v-if="isAuthenticated===false">
-		<div class="login-register-button">
-            <div>
-            <img src="https://pbs.twimg.com/profile_images/1333471260483801089/OtTAJXEZ_400x400.jpg">
-           </div>
-            <div>    
-            <button class="login-button" @click="showLoginModalFunc(true)">Login</button>
-			<button class="register-button" @click="showRegisterModalFunc(true)">Register</button>
-		    </div>
+<div id="navbar">
+    <div class="sameline">
+        <img src="https://logodownload.org/wp-content/uploads/2018/02/reddit-logo.png">
+        <div class="buttons" v-if="isAuthenticated===false">
+            <button class="login-button" @click="showLoginModalFunc(true)">Log In</button>
+            <button class="register-button" @click="showRegisterModalFunc(true)">Sign Up</button>
         </div>
-	</div>
-	<div class="logout-button" v-else>
-        <div>
-       <img src="https://pbs.twimg.com/profile_images/1333471260483801089/OtTAJXEZ_400x400.jpg">
+        <div class="logout" v-else>
+            <span class="user-info">Hello, {{ getUserName() }}</span>
+            <button class="logout-button" @click="handleLogout()">Logout</button>
         </div>
-        <div>
-        <!-- <p>Hello {{localStorage.userName}}!</p>         -->
-        <button class="logout" @click="handleLogout()">Logout</button>
-        </div>
-	</div>
+    </div>
     <div id= "login" v-if="showLoginModal===true && isAuthenticated === false" class="modal">
         <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
     </div>
     <div id= "register"  v-if="showRegisterModal===true && isAuthenticated === false" class="modal" >
         <RegisterModal @showRegisterModalFunc="showRegisterModalFunc" :showRegisterModal="showRegisterModal"> </RegisterModal>
     </div>
-	
 </div>
 </template>
 
@@ -41,14 +30,13 @@ export default {
     components:{
         LoginModal,
         RegisterModal,
-       
     },
-    
 	data() {
 		return {
 			isAuthenticated: false,
 			showLoginModal: false,
 			showRegisterModal: false,
+            userName: null
 		}
 	},
 	mounted() {
@@ -76,43 +64,84 @@ export default {
             localStorage.userId=null;
             alert("Logout Successfull")
 		},
-        toggleIsAuthenticated(){
+        toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
+        },
+        getUserName() {
+            return localStorage.userName;
         }
-			
     }
-		
-	}
-
+}
 </script>
 
 <style scoped>
-.navbar {
-		float:right;
+#navbar {
+	border-radius: 10px 10px 10px 10px;
+}
+button {
+    border: 0;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 256px;
+    font-family: Noto Sans,Arial,sans-serif;
+    font-size: 14px;
+    margin-right: 98px;
+}
+.logout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 256px;
+    font-family: Noto Sans,Arial,sans-serif;
+    font-size: 14px;
+    margin-right: 98px;
+}
+.user-info {
+    font-family: Noto Sans,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 700;
 }
 .login-button {
-background-image: linear-gradient(to right, #0079D3,  #0079D3);
- padding: 15px;   	
+    width: 120px;
+    height: 32px;
+    border: 1px solid #0079d3;
+	border-radius: 9999px;
+    background-color: white;
+    color: #0279d2;
+    font-weight: 700;
+    padding: 0px 16px 0px 16px;
 }
 .register-button {
-background-image: linear-gradient(to right, #0079D3,  #0079D3);
-padding:15x;    	
+    width: 120px;
+    height: 32px;
+    background-color: #0079d3;
+    color: white;
+    border-radius: 9999px;
+    font-weight: 700;
+    padding: 0px 16px 0px 16px;
 }
-.login-register-button{
-  
-   background-color: #DAE0E6;
-   display: flex;
-   justify-content: space-between;
+.logout-button {
+    width: 120px;
+    height: 32px;
+    border: 1px solid #0079d3;
+	border-radius: 9999px;
+    background-color: white;
+    color: #0279d2;
+    font-weight: 700;
+    padding: 0px 16px 0px 16px;
 }
-.logout-button{
-   padding:15px;
-   background-image: linear-gradient(to right, #0079D3,  #0079D3);
-   justify-content: space-between;
-   display: flex;
+img {
+    width: 96px;
+    height: 48px;
+    object-fit: scale-down;
+    margin-left: 20px;
 }
-img{
-    height: 50px;
-    width: 50px;
+.sameline {
+    display: flex;
+    justify-content: space-between;
 }
 </style>
 

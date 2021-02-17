@@ -39,32 +39,31 @@ import axios from 'axios';
 export default {
     name: 'LoginModal',
     props: ['showLoginModal','isAuthenticated'],
-data()
-{
-return{
-  showModal: false,
-  loginUsername: null,
-  loginPassword: null,
-
-}},
-methods:{
-   showLoginModalFunc(){
-       this.showModal = false
-       this.$emit("showLoginModalFunc",false)
-   },
-    async loginSubmit() {
-			const requestBody = {
-				userName: this.loginUsername,
-				password: this.loginPassword
-			};
+    data()
+    {
+      return{
+        showModal: false,
+        loginUsername: null,
+        loginPassword: null,
+      }
+    },
+    methods:{
+      showLoginModalFunc(){
+        this.showModal = false
+        this.$emit("showLoginModalFunc",false)
+      },
+      async loginSubmit() {
+        const requestBody = {
+          userName: this.loginUsername,
+          password: this.loginPassword
+        };
 			try{
 				const response = await axios.post("http://localhost:8080/user/auth/login",requestBody);
-                this.$emit("toggleIsAuthenticated")
-				localStorage.isAuthenticated = true;
-				localStorage.userName = response.data.userName;
-                localStorage.userId = response.data.id;
-               alert("Login Successfull") 
-               
+        this.$emit("toggleIsAuthenticated")
+        localStorage.isAuthenticated = true;
+        localStorage.userName = response.data.userName;
+        localStorage.userId = response.data.id;
+        alert("Login Successfull")        
 			}
 			catch(e){
 				alert("Invalid Credentials")

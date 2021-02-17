@@ -63,23 +63,17 @@
 	<div v-if="show===true">
 		<AlertModal @showModal="showModal" :show="show"></AlertModal>
 	</div>
-	<div v-if="showLogin===true">
-		<LoginModal @showLoginModal="showLoginModal" :showLogin="showLogin"></LoginModal>
-	</div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import AlertModal from '../Modal/AlertModal'
-import LoginModal from '../Modal/LoginModal'
-//import RegisterModal from '../Modal/RegisterModal'
 export default {
 	name: "Posts",
 	props: ['posts'],
 	components:{
-	 AlertModal,
-	 LoginModal
+	 AlertModal
 	},
 	data() {
 		return {

@@ -5,7 +5,7 @@
  </transition>
  <transition name="slide" appear>
   <div class="modal" v-if="showModal">
-   <h2>SignUp</h2>
+   <h2>Sign Up</h2>
    <form id="signup-form">
       <!-- name -->
       <div class="field">
