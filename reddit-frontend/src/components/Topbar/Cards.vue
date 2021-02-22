@@ -37,7 +37,7 @@ export default {
 .flex-container {
 	display: flex;
 	justify-content: center;
-	align-content: start;
+	align-content: flex-start;
 	height: 160px;
 }
 .flex-container > div {

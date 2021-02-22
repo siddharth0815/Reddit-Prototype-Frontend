@@ -6,7 +6,7 @@
 		</div>
 		<ol>
 			<li class="list" :key="item.id" v-for="(item,index) in communities">
-				<TopItem :item="item" :index="index" @upvote="upvote" @downvote="downvote"></TopItem>
+				<TopItem :item="item" :index="index" @vote="vote"></TopItem>
 			</li>
 		</ol>
 	</div>
@@ -39,25 +39,21 @@ export default {
 		.then( response => (this.communities = response.data) )
 	},
 	methods: {
-		async upvote(index) {
+		async vote(index, add) {
 			if( localStorage.isAuthenticated === "true" ) {
 				await axios
-				.post('http://localhost:8080/api/community/upvote/'+this.communities[index].id)
+				.post('http://localhost:8080/api/community/vote/'+localStorage.userId+'/'+this.communities[index].id+'?add='+add)
 				.then(response => (console.log(response)));
-				this.communities[index].upvotes++;
-				if( index != 0 && this.communities[index].upvotes > this.communities[index-1].upvotes )
-					this.$emit("forceRerender");
-			}
-			else {
-				this.showModal(true)
-			}
-		},
-		async downvote(index) {
-			if( localStorage.isAuthenticated === "true" ) {
-				await axios
-				.post('http://localhost:8080/api/community/downvote/'+this.communities[index].id)
-				.then(response => (console.log(response)));
-				this.communities[index].downvotes++;
+				if( add ) {
+					this.communities[index].votes++;
+					if( index != 0 && this.communities[index].votes > this.communities[index-1].votes )
+						this.$emit("forceRerender");
+				}
+				else {
+					this.communities[index].votes--;
+					if( index != 4 && this.communities[index].votes < this.communities[index+1].votes )
+						this.$emit("forceRerender");
+				}
 			}
 			else {
 				this.showModal(true)

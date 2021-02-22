@@ -8,7 +8,6 @@
 <script>
 import TopCommunities from './TopCommunities.vue'
 import TrendingCommunities from './TrendingCommunities.vue'
-// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
 	name: 'Sidebar',
@@ -21,6 +20,11 @@ export default {
 			topKey: 0,
 			trendingKey: 0
 		}
+	},
+	mounted() {
+		this.emitter.on('postVote', () => {
+			this.trendingRerender();
+		});
 	},
 	methods: {
 		topRerender() {

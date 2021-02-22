@@ -52,14 +52,14 @@ export default {
 			};
 			try {
 				const response = await axios.post("http://localhost:8080/user/auth/login",requestBody);
-				this.$emit("toggleIsAuthenticated")
+				this.$emit("toggleIsAuthenticated");
 				localStorage.isAuthenticated = true;
 				localStorage.userName = response.data.userName;
 				localStorage.userId = response.data.id;
 				alert("Login Successfull");
 			}
 			catch(e){
-				alert("Invalid Credentials");
+				alert("Invalid Credentials"+e);
 			}
 		}
 	},
@@ -80,80 +80,70 @@ export default {
 	display:flex;
 }
 .button {
-	appearance: none;
-	outline: none;
-	border: none;
-	background: none;
-	cursor: pointer;
-	display: inline-block;
-	padding: 15px 25px;
-	background-image: linear-gradient(to right, #CC2E5D, #FF5858);
-	border-radius: 8px;
-
-	color: #FFF;
-	font-size: 18px;
-	font-weight: 700;
-
-	box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
-	transition: 0.4s ease-out;
+    width: 120px;
+    height: 32px;
+    border: 1px solid #0079d3;
+	border-radius: 9999px;
+    background-color: white;
+    color: #0279d2;
+    font-weight: 700;
+    padding: 0px 16px 0px 16px;
+	margin-top: 10px;
 }
-
+#login-form {
+	text-align: right;
+}
+.submit-button {
+	text-align: center;
+}
 .modal-overlay {
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- z-index: 98;
- background-color: rgba(0, 0, 0, 0.3);
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 98;
+	background-color: rgba(0, 0, 0, 0.3);
 }
-
 .modal {
- position: fixed;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- z-index: 99;
- 
- width: 100%;
- max-width: 400px;
- background-color: #FFF;
- border-radius: 16px;
- 
- padding: 25px;
-}
- 
- h2 {
-  color: #222;
-  font-size: 32px;
-  font-weight: 900;
-  margin-bottom: 15px;
- }
- 
- p {
-  color: #666;
-  font-size: 18px;
-  font-weight: 400;
-  margin-bottom: 15px;
- }
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 99;
 
-.fade-enter-active,
-.fade-leave-active {
- transition: opacity .5s;
-}
+	width: 100%;
+	max-width: 400px;
+	background-color: #FFF;
+	border-radius: 16px;
 
-.fade-enter,
-.fade-leave-to {
- opacity: 0;
+	padding: 25px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-
-.slide-enter-active,
-.slide-leave-active {
- transition: transform .5s;
+h2 {
+	color: #222;
+	font-size: 32px;
+	font-weight: 900;
+	margin-bottom: 15px;
 }
-
-.slide-enter,
-.slide-leave-to {
- transform: translateY(-50%) translateX(100vw);
+p {
+	color: #666;
+	font-size: 18px;
+	font-weight: 400;
+	margin-bottom: 15px;
+}
+.fade-enter-active,.fade-leave-active {
+	transition: opacity .5s;
+}
+.fade-enter,.fade-leave-to {
+	opacity: 0;
+}
+.slide-enter-active,.slide-leave-active {
+	transition: transform .5s;
+}
+.slide-enter,.slide-leave-to {
+	transform: translateY(-50%) translateX(100vw);
 }
 </style>

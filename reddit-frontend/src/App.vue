@@ -10,7 +10,7 @@
 			<Cards></Cards>
 		</div>
 		<div class="bottom">
-			<Posts @increment="upvote" @decrement="downvote" :posts="posts"/>
+			<Posts @vote="vote" :posts="posts"/>
 			<div class="sidebar">
 				<Sidebar></Sidebar>
 			</div>
@@ -23,7 +23,7 @@ import Posts from './components/Feeds/Posts'
 import Sidebar from './components/Sidebar/Sidebar'
 import Cards from './components/Topbar/Cards'
 import Navbar from './components/Navbar/Auth'
-import axios from 'axios' 
+import axios from 'axios'
 // import VueAxios from 'vue-axios'
 
 export default {
@@ -40,17 +40,11 @@ export default {
 		}
 	},
 	methods: {
-		upvote(upvotes, index) {
-			axios
-			.post('http://localhost:8080/api/content/upvote/'+this.posts[index].id)
-			.then(response=>{console.log(response)});
-			this.posts[index].upvotes++;
-		},
-		downvote(downvotes, index) {
-			axios
-			.post('http://localhost:8080/api/content/downvote/'+this.posts[index].id)
-			.then(response=>{console.log(response)});
-			this.posts[index].downvotes++;
+		async vote(votes, index, add) {
+			const result = await axios
+			.post('http://localhost:8080/api/content/vote/'+localStorage.userId+'/'+this.posts[index].id+'?add='+add)
+			this.posts[index].votes += result.data;
+			this.emitter.emit('postVote')
 		},
 	},
 	mounted(){

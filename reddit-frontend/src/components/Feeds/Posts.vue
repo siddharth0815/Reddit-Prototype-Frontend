@@ -16,10 +16,9 @@
 					<h4>{{ post.contentBody}}</h4>
 					<div class="votes-image">
 						<div class="votes-container">
-							<button id="upvote-button" @click="upvote(post.upvotes, index)">^</button>
-							<p id="upvotes">{{ post.upvotes }}</p>
-							<p id="downvotes">{{ post.downvotes }}</p>
-							<button id="downvote-button" @click="downvote(post.downvotes, index)">v</button>
+							<button id="upvote-button" @click="vote(post.votes, index, true)">^</button>
+							<p id="votes">{{ post.votes }}</p>
+							<button id="downvote-button" @click="vote(post.votes, index, false)">v</button>
 						</div>
 						<div>
 							<img :src="post.imageURL"/>
@@ -84,19 +83,11 @@ export default {
 		};
 	},
 	methods: {
-		upvote(upvotes, index) {
-			if(localStorage.isAuthenticated === "true"){
-				this.$emit("increment", upvotes, index)
+		vote(votes, index, add) {
+			if(localStorage.isAuthenticated === "true") {
+				this.$emit("vote", votes, index, add)
 			}
-			else{
-				this.showModal(true)
-			}
-		},
-		downvote(downvotes, index) {
-			if(localStorage.isAuthenticated === "true"){
-				this.$emit("decrement", downvotes, index)
-			}
-			else{
+			else {
 				this.showModal(true)
 			}
 		},
@@ -235,7 +226,6 @@ textarea{
 	height: auto;
 }
 .single-comment-section {
-	
 	display: flex;
 	border-color:black;
 	border-style: solid;
@@ -245,7 +235,6 @@ textarea{
 	background-color: #DAE0E6;
 	justify-content: space-between;
 	width:500px;
-	
 }
 .input-comment{
 	padding-left: 120px;
@@ -256,7 +245,6 @@ textarea{
 .community-user{
 	display: flex;
 	padding-left: 75px;
-	
 }
 .user-name{
 	padding-left: 10px;
@@ -267,13 +255,11 @@ textarea{
 	color: black;
 }
 .single-post{
-	border-color: black;
-	border-width: thin;
-	border-style: solid;
 	margin-top:50px;
 	width: 600px;
 	background-color: white;
-	border-radius: 10px 10px 10px 10px;
+	border-radius: 4px;
+	border: 1px solid #ccc;
 }
 .all-posts{
 	background-color: #DAE0E6;
@@ -284,12 +270,6 @@ textarea{
 	padding-right: 50px;
 	margin-bottom: 2rem;
 }
-
-
-.dropbtn {
-	
-}
-
 .dropdown {
 	position: relative;
 	display: inline-block;

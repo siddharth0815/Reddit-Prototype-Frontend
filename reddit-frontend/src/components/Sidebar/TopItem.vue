@@ -3,11 +3,11 @@
 		<span class="index"> {{index+1}} </span>
 		<span class="title"> r/{{item.title}} </span>
 		<div class="small">
-			<button @click="upvote(index)">^</button>
+			<button @click="vote(index, true)">^</button>
 			<div class="fixwidth">
-				<span> {{item.upvotes}} </span>
+				<span> {{item.votes}} </span>
 			</div>
-			<button @click="downvote(index)">v</button>
+			<button @click="vote(index, false)">v</button>
 		</div>
 	</div>
 </template>
@@ -18,11 +18,8 @@ export default {
 	name: 'TopItem',
 	props: ["item", "index"],
 	methods: {
-		upvote(id) {
-			this.$emit("upvote",id);
-		},
-		downvote(id) {
-			this.$emit("downvote",id);
+		vote(id, add) {
+			this.$emit("vote", id, add);
 		}
 	}
 }
