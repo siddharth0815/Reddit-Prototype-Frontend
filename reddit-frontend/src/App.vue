@@ -42,7 +42,7 @@ export default {
 	methods: {
 		async vote(votes, index, add) {
 			const result = await axios
-			.post('http://localhost:8080/api/content/vote/'+localStorage.userId+'/'+this.posts[index].id+'?add='+add)
+			.post('http://localhost:8080/api/content/vote/user/'+localStorage.userId+'/content/'+this.posts[index].id+'?add='+add)
 			this.posts[index].votes += result.data;
 			this.emitter.emit('postVote')
 		},

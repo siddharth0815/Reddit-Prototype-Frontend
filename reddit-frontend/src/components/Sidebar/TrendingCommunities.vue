@@ -43,7 +43,7 @@ export default {
 			if( localStorage.isAuthenticated === "true" ) {
 				try {
 					const response = await axios
-					.post(url+'community/follow/'+userId+'/'+communityId)
+					.post(url+'community/follow/user/'+userId+'/community/'+communityId)
 					console.log(response);
 					this.communities[index].members++;
 				}

@@ -42,7 +42,7 @@ export default {
 		async vote(index, add) {
 			if( localStorage.isAuthenticated === "true" ) {
 				await axios
-				.post('http://localhost:8080/api/community/vote/'+localStorage.userId+'/'+this.communities[index].id+'?add='+add)
+				.post('http://localhost:8080/api/community/vote/user/'+localStorage.userId+'/community/'+this.communities[index].id+'?add='+add)
 				.then(response => (console.log(response)));
 				if( add ) {
 					this.communities[index].votes++;

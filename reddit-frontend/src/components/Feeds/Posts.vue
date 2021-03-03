@@ -101,7 +101,7 @@ export default {
 					parentId: post.id,
 				}
 				axios
-				.post("http://localhost:8080/api/content/create/77/78",requestBody)
+				.post("http://localhost:8080/api/content/create/user/77/community/78",requestBody)
 				.then(response=>{console.log(response)})
 				post.comments.push(this.commentBox[index]);
 				this.commentBox[index]="";
