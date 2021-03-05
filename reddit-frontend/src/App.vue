@@ -3,16 +3,18 @@
 		<div class="navbar">
 			<Navbar></Navbar>
 		</div>
-		<div class="cards-container">
-			<div>
-				<div class="cards-title">Trending today</div>
+		<div class="lower">
+			<div class="cards-container">
+				<div>
+					<div class="cards-title">Trending today</div>
+				</div>
+				<Cards></Cards>
 			</div>
-			<Cards></Cards>
-		</div>
-		<div class="bottom">
-			<Posts @vote="vote" :posts="posts"/>
-			<div class="sidebar">
-				<Sidebar></Sidebar>
+			<div class="bottom">
+				<Posts @vote="vote" :posts="posts"/>
+				<div class="sidebar">
+					<Sidebar></Sidebar>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -100,5 +102,8 @@ html, body {
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 18px;
+}
+.lower {
+	padding-top: 48px;
 }
 </style>
