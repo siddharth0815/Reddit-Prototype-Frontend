@@ -78,7 +78,17 @@ html, body {
 }
 .navbar{
 	background-color: white;
-	border: 0;
+	flex: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 80;
+	margin-top: 0;
+	height: 48px;
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
 }
 .cards-container {
 	margin: 0px 186px 0px 186px;
