@@ -102,6 +102,7 @@ html, body {
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 18px;
+	padding: 0 16px 10px;
 }
 .lower {
 	padding-top: 48px;
