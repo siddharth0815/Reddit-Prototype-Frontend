@@ -50,6 +50,7 @@ export default {
 		},
 	},
 	mounted(){
+		console.log("hello mounted app")
 		axios
 		.get('http://localhost:8080/api/content/-1')
 		.then(response=> {this.posts = response.data});

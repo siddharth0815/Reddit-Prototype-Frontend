@@ -62,27 +62,28 @@
 			</div>
 		</div>
 	</div>
-	<div v-if="show===true">
-		<AlertModal @showModal="showModal" :show="show"></AlertModal>
+	<div v-if="showLoginModal===true">
+		 <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
 	</div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-import AlertModal from '../Modal/AlertModal'
+//import AlertModal from '../Modal/AlertModal'
+import LoginModal from '../Modal/LoginModal'
 export default {
 	name: "Posts",
 	props: ['posts'],
 	components:{
-	 AlertModal
+	 LoginModal
 	},
 	data() {
 		return {
 			toggle: [false, false, false, false, false],
 			commentBox: ["","","","",""],
-			show: false,
-			showLogin: false,
+			showLoginModal: false,
+			isAuthenticated: false,
 		};
 	},
 	methods: {
@@ -91,12 +92,12 @@ export default {
 				this.$emit("vote", votes, index, add)
 			}
 			else {
-				this.showModal(true)
+				this.showLoginModalFunc(true)
 			}
 		},
 		postComment(post,index){
 			if(localStorage.isAuthenticated !== "true"){
-				this.showModal(true)
+				this.showLoginModalFunc(true)
 			}
 			else if(this.commentBox[index]){
 				const requestBody = {
@@ -125,13 +126,14 @@ export default {
 				post[key]=comments;
 			}
 		},
-		showModal(value){
-			this.show = value
-			console.log(this.show)
+		showLoginModalFunc(value) {
+			//this.showRegisterModal=!(value);
+            this.showLoginModal=value;
+            console.log("showloginmodalfunc", this.showLoginModal)
 		},
-		showLoginModal(value){
-			this.showLogin = value
-		}
+		toggleIsAuthenticated() {
+            this.isAuthenticated = !(this.isAuthenticated);
+        },
 		
 		
 	}
