@@ -78,7 +78,6 @@ export default {
 			   if(found === 0)
 			   this.posts[post][key] = 0;
 			}
-			
 			console.log(this.posts)
 		}
 	}
