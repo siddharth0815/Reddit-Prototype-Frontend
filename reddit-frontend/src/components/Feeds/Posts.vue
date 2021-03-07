@@ -343,7 +343,6 @@ textarea{
 	padding-left:10px;
 	padding-bottom:10px;
 	padding-top:2px;
-
 }
 
 .dropdown-content a:hover {background-color: #ddd;}

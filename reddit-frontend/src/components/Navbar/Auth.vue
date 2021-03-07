@@ -133,6 +133,7 @@ button {
     font-family: Noto Sans,Arial,sans-serif;
     font-size: 14px;
     font-weight: 700;
+    padding: 0 16px;
 }
 .login-button {
     width: 120px;
