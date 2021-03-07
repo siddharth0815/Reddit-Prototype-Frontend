@@ -38,6 +38,7 @@
         <div class="buttons" v-if="isAuthenticated===false">
             <button class="login-button" @click="showLoginModalFunc(true)">Log In</button>
             <button class="register-button" @click="showRegisterModalFunc(true)">Sign Up</button>
+            
         </div>
         <div class="buttons" v-else>
             <span class="user-info">Hello, {{ getUserName() }}</span>
@@ -75,20 +76,27 @@ export default {
 	mounted() {
 		if(localStorage.isAuthenticated != null) {
 			this.isAuthenticated = localStorage.isAuthenticated == "true"
-		}
+        }
+        this.emitter.on('RegisterModal', () => {
+			this.showRegisterModalFunc(true);
+        });
+        this.emitter.on('LoginModal', () => {
+			this.showLoginModalFunc(true);
+		});
 	},
 	methods: {
 		showLoginModalFunc(value) {
-            //this.showRegisterModal=!(value);
+            if (value)
+                this.showRegisterModal=!(value);
             this.showLoginModal=value;
-            console.log(this.showLoginModal)
+            
+            
 		},
 		showRegisterModalFunc(value) {
-            //this.showLoginModal=!(value);
-            console.log("enter")
-            //console.log("value",value)
+            if (value)
+                this.showLoginModal=!(value);
             this.showRegisterModal=value;
-            console.log(this.showRegisterModal)
+            
 		},
 		handleLogout() {
 			this.isAuthenticated = false;
@@ -107,7 +115,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #navbar {
     align-items: center;
     display: inline-flex;

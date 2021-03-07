@@ -37,7 +37,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #sidebar {
 	margin-left: 24px;
 	margin-top: 28px;
@@ -59,7 +59,5 @@ ol {
 h2 {
 	margin-top: 0px;
 }
-.nolinebreak {
-	display: flex;
-}
+
 </style>

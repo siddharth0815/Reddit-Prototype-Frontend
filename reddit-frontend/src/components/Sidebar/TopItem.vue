@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #topItem {
 	align-items: center;
 	display: flex;
@@ -39,15 +39,22 @@ export default {
 	color: #1c1c1c;
 	text-align: right;
 	width: 20px;
+	margin-right: 20px;
 }
 .title {
 	display: flex;
 	flex-direction: column;
 	width: 170px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
 }
 .small {
+	line-height: 16px;
 	display: flex;
-	font-size: 10px;
+	font-size: 12px;
+	font-weight: 400;
+	padding-bottom: 4px;
 }
 .fixwidth {
 	justify-content: center;

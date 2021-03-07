@@ -84,13 +84,13 @@ export default {
 }
 </script>
 
-<style>
+<style >
 html, body {
   margin: 0px !important;
   padding: 0px !important;
 }
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: IBMPlexSans, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
@@ -100,10 +100,13 @@ html, body {
 .bottom {
 	display: flex;
 	justify-content: center;
+	padding-left:165px;
+	padding-right:250px;
 }
 .sidebar {
 	padding-top: 20px;
 	padding-left: 0px;
+	
 }
 .navbar{
 	background-color: white;
@@ -133,5 +136,9 @@ html, body {
 }
 .lower {
 	padding-top: 48px;
+}
+button{
+	border: 0;
+	outline: 0;
 }
 </style>

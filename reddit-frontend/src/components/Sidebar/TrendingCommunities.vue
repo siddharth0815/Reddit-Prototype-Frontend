@@ -7,15 +7,13 @@
 			</li>
 		</ol>
 	</div>
-	<div v-if="showLoginModal===true">
-		<LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
-	</div>
+	
 </div>
 </template>
 
 <script>
 import TrendingItem from "./TrendingItem"
-import LoginModal from "../Modal/LoginModal"
+
 import axios from 'axios'
 
 const url = 'http://localhost:8080/api/';
@@ -24,7 +22,7 @@ export default {
 	name: 'TrendingCommunities',
 	components: {
 		TrendingItem,
-		LoginModal
+		
 
 	},
 	data() {
@@ -47,18 +45,18 @@ export default {
 					.post(url+'community/follow/user/'+userId+'/community/'+communityId)
 					console.log(response);
 					this.communities[index].members++;
+					alert("Joined Community Successfully!")
 				}
 				catch(e) {
 					alert("User already exists in community");
 				}
 			}
 			else {
-				this.showLoginModalFunc(true)
+				this.showLoginModalFunc()
 			}
 		},
-		showLoginModalFunc(value){
-			this.showLoginModal=value;
-            console.log("showloginmodalfunc", this.showLoginModal)
+		showLoginModalFunc(){
+			this.emitter.emit("LoginModal")
 		},
 		toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
@@ -69,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #trendingCommunities {
 	background-color: white;
 	color: #1a1a1b;
@@ -78,10 +76,15 @@ export default {
 	border-radius: 4px;
 	overflow: visible;
 }
-.nolinebreak {
-	display: flex;
-}
 .list {
 	border-bottom: thin solid #edeff1;
+}
+li {
+	display: list-item;
+}
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 </style>

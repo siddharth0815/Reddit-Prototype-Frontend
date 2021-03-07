@@ -27,15 +27,26 @@
 				</div>
 			</form>
 			<button class="button" @click="showRegisterModalFunc()">Close</button>
+			<div class="bottom-linetext">
+                <div class="normal-text">
+                  <p>Already a redditor?</p>
+                </div>
+                <div class="link-text">
+                    <a href=# @click="showLoginModalFunc(true)">Login</a>
+                </div>
+            </div>
 		</div>
 	</transition>
+
 </div>
 </template>
 
 <script>
 import axios from 'axios';
+
 export default {
-	name: 'RegsiterModal',
+	
+	name: 'RegisterModal',
 	props: ['showRegisterModal'],
 	data() {
 		return{
@@ -43,6 +54,8 @@ export default {
 			registerUsername: null,
 			registerPassword: null,
 			registerEmail: null,
+		
+			isAuthenticated: false,
 		}
 	},
 	methods: {
@@ -50,6 +63,9 @@ export default {
 			this.showModal = false
 			console.log("child")
 			this.$emit("showRegisterModalFunc",false)
+		},
+		showLoginModalFunc(){
+		  this.emitter.emit("LoginModal")
 		},
 		async registerSubmit() {
 			const requestBody = {
@@ -70,7 +86,9 @@ export default {
 		},
 	},
 	mounted() {
+		console.log("mounted register")
 		this.showModal = this.showRegisterModal;
+		console.log("showRegisterModal",this.showModal)
 	}
 }
 </script>
@@ -110,6 +128,14 @@ export default {
 	bottom: 0;
 	z-index: 98;
 	background-color: rgba(0, 0, 0, 0.3);
+	height: 100vh;
+}
+.bottom-linetext{
+	display: flex;
+}
+.link-text{
+	padding-top: 20px;
+	padding-left: 3px;
 }
 .modal {
 	position: fixed;

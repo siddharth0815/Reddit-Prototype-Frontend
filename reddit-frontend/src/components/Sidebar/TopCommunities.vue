@@ -10,22 +10,18 @@
 			</li>
 		</ol>
 	</div>
-	<div v-if="showLoginModal===true">
-	 <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
-	</div>
 	</div>
 </template>
 
 <script>
 import TopItem from "./TopItem"
 import axios from 'axios'
-import LoginModal from '../Modal/LoginModal'
+
 
 export default {
 	name: 'TopCommunities',
 	components: {
 		TopItem,
-		LoginModal
 	},
 	data() {
 		return {
@@ -57,13 +53,11 @@ export default {
 				}
 			}
 			else {
-				this.showLoginModalFunc(true)
+				this.showLoginModalFunc()
 			}
 		},
-		showLoginModalFunc(value) {
-			//this.showRegisterModal=!(value);
-            this.showLoginModal=value;
-            console.log("showloginmodalfunc", this.showLoginModal)
+		showLoginModalFunc() {
+			this.emitter.emit("LoginModal")
 		},
 		toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
@@ -74,7 +68,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #topCommunities {
 	background-color: white;
 	color: #1a1a1b;
@@ -110,5 +104,16 @@ export default {
     padding: 0;
     border: 0;
     line-height: 20px;
+}
+li {
+	display: list-item;
+}
+ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+h2 {
+	margin-top: 0px;
 }
 </style>

@@ -33,6 +33,8 @@ export default {
 .bottom {
 	font-weight: 600;
 	font-size: 12px;
-	margin-left: 25px;
+	margin-left: 20px;
+	padding:0;
+	justify-content: left;
 }
 </style>

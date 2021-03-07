@@ -23,27 +23,44 @@
 				</div>
 			</form>
 			<button class="button" @click="showLoginModalFunc()">Close</button>
+			<div class="bottom-linetext">
+                <div class="normal-text">
+                  <p>Already a redditor?</p>
+                </div>
+                <div class="link-text">
+                    <a href=# @click="showRegisterModalFunc()">Sign Up</a>
+                </div>
+            </div>
 		</div>
 	</transition>
+	
 </div>
 </template>
 
 <script>
 import axios from 'axios';
+//import RegisterModal from './RegisterModal'
+
 export default {
+  //components: { RegisterModal },
 	name: 'LoginModal',
 	props: ['showLoginModal','isAuthenticated'],
 	data() {
 		return {
 			showModal: false,
+			
 			loginUsername: null,
 			loginPassword: null,
 		}
 	},
 	methods:{
 		showLoginModalFunc() {
+			console.log("hello login")
 			this.showModal = false
 			this.$emit("showLoginModalFunc",false)
+		},
+		showRegisterModalFunc(){
+		   this.emitter.emit("RegisterModal")
 		},
 		async loginSubmit() {
 			const requestBody = {
@@ -64,6 +81,7 @@ export default {
 		}
 	},
 	mounted() {
+		
 		this.showModal = this.showLoginModal;
 	}
 }
@@ -96,6 +114,13 @@ export default {
 .submit-button {
 	text-align: center;
 }
+.bottom-linetext{
+	display: flex;
+}
+.link-text{
+	padding-top: 20px;
+	padding-left: 3px;
+}
 .modal-overlay {
 	position: absolute;
 	top: 0;
@@ -104,6 +129,7 @@ export default {
 	bottom: 0;
 	z-index: 98;
 	background-color: rgba(0, 0, 0, 0.3);
+	height: 100vh;
 }
 .modal {
 	position: fixed;

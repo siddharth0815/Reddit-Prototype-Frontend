@@ -2,81 +2,80 @@
 <template>
 <div id="posts">
 	<div class="all-posts">
+		<div class="post-title">Popular Posts</div>
 		<div class="posts">
 			<div class="post-container">
 				<div class="single-post" :key="post.id" v-for="(post, index) in posts">
-					<div class="votes-container">
-						<button :id="post.userVote===1?'upvoted-button':'upvote-button'" @click="vote(post.votes, index, true)">^</button> 
-						<p id="votes">{{ post.votes }}</p>
-						<button :id="post.userVote===-1?'downvoted-button':'downvote-button'" @click="vote(post.votes, index, false)">v</button>	   
-					</div>
-					<div class="community-user">
-						<div class="community-name">
-							<h5>r/{{post.communityName}}</h5>
+						
+						<div class="votes-container">
+							<button :id="post.userVote===1?'upvoted-button':'upvote-button'" @click="vote(post.votes, index, true)">^</button> 
+							<p id="votes">{{ post.votes }}</p>
+							<button :id="post.userVote===-1?'downvoted-button':'downvote-button'" @click="vote(post.votes, index, false)">v</button>	   
 						</div>
-						<div class="user-name">
-							<h5>Posted by {{post.userName}}</h5>
+						<div class="right-separate">
+							<div class="community-user">
+								<div class="community-name">
+									<h5>r/{{post.communityName}}</h5>
+								</div>
+								<div class="user-name">
+									<h5>Posted by {{post.userName}}</h5>
+								</div>
+							</div>
+							<h4>{{ post.contentBody}}</h4>
+							
+							<div class="votes-image">
+								<div>
+									<img :src="post.imageURL"/>
+								</div>
+							</div>
+							<div class="post-comments">
+								<div id="comment-button">
+									<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
+								</div>
+								<div class="dropdown">
+									<div id="react-button">
+										<button type="button" class="button">React</button>
+									</div>
+									<div class="dropdown-content">
+										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
+										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
+									</div>
+								</div>
+								<div id="hide-button">
+									<button type="button" class="button">Hide</button>
+								</div>
+								<div id="report-button">
+									<button type="button" class="button">Report</button>
+								</div>
+							</div>
+							<div v-if="toggle[index] === true" class="comments-section">
+								<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
+									<p id="comment">{{ comment }}</p>
+									<div class="reply-class">
+										<button id="reply-button">reply</button>
+									</div>
+								</div>
+								<div id="comment-box">
+									<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
+									<button id="submit-button" @click="postComment(post,index)">Comment</button>
+								</div>
+							</div>
 						</div>
-					</div>
-					<h4>{{ post.contentBody}}</h4>
 					
-					<div class="votes-image">
-						<div>
-							<img :src="post.imageURL"/>
-						</div>
-					</div>
-					<div class="post-comments">
-						<div id="comment-button">
-							<button type = "button" class="button" v-on:click="displayComments(post, index)">comment</button>
-						</div>
-						<div class="dropdown">
-							<div id="react-button">
-								<button type="button" class="button">react</button>
-							</div>
-							<div class="dropdown-content">
-								<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
-								<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
-								<img class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
-							</div>
-						</div>
-						<div id="hide-button">
-							<button type="button" class="button">hide</button>
-						</div>
-						<div id="report-button">
-							<button type="button" class="button">report</button>
-						</div>
-					</div>
-					<div v-if="toggle[index] === true" class="comments-section">
-						<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
-							<p id="comment">{{ comment }}</p>
-							<div>
-								<button id="reply-button">reply</button>
-							</div>
-						</div>
-						<div id="comment-box">
-							<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
-							<button id="submit-button" @click="postComment(post,index)">submit</button>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div v-if="showLoginModal===true">
-		 <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
 	</div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-//import AlertModal from '../Modal/AlertModal'
-import LoginModal from '../Modal/LoginModal'
 export default {
 	name: "Posts",
 	props: ['posts', 'votedPosts'],
 	components:{
-	 LoginModal
 	},
 	data() {
 		return {
@@ -92,12 +91,12 @@ export default {
 				this.$emit("vote", votes, index, add)
 			}
 			else {
-				this.showLoginModalFunc(true)
+				this.showLoginModalFunc()
 			}
 		},
 		postComment(post,index){
 			if(localStorage.isAuthenticated !== "true"){
-				this.showLoginModalFunc(true)
+				this.showLoginModalFunc()
 			}
 			else if(this.commentBox[index]){
 				const requestBody = {
@@ -126,10 +125,8 @@ export default {
 				post[key]=comments;
 			}
 		},
-		showLoginModalFunc(value) {
-			//this.showRegisterModal=!(value);
-            this.showLoginModal=value;
-            console.log("showloginmodalfunc", this.showLoginModal)
+		showLoginModalFunc() {
+			this.emitter.emit("LoginModal")
 		},
 		toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
@@ -157,13 +154,11 @@ p{
 h4 {
 	text-align: left;
 	margin-bottom: 15px;
-	padding-left: 75px;
 	margin-top: 0px;
 }
 img {
 	height: auto;
 	padding-bottom: 20px;
-	padding-left: 50px;
 	height: 350px;
 	width: 500px;
 }
@@ -209,7 +204,23 @@ textarea{
 	background-color: #D0D0D0;
 }
 #submit-button{
-	height: 20px;
+	background-color: #0079d3;
+	color: #ffffff;
+	fill: #ffffff;
+	border: none;
+    border-radius: 9999px;
+    box-sizing: border-box;
+	font-family: Noto Sans, Arial,sans-serif;
+    font-size: 14px;
+    height: 32px;
+    padding: 0 16px;
+	
+    margin-top: 10px;
+    align-items: center;
+    text-align: center;
+}
+#submit-button:hover{
+	background-color: #D0D0D0;
 }
 #votes{
 	padding-right: 9px;
@@ -245,9 +256,19 @@ textarea{
 #comment-box{
 	display: flex;
 	justify-content: space-between;
+	
 }
 #reply-button{
-	margin-top: 20px;
+	 width: 80px;
+    height: 25px;
+    border: 1px solid #0079d3;
+	border-radius: 9999px;
+    background-color: white;
+    color: #0279d2;
+    font-weight: 700;
+    padding: 0px 16px;
+
+	
 }
 #reply-button:hover{
 	background-color: #D0D0D0;
@@ -257,6 +278,14 @@ textarea{
 }
 .button {
 	background-color: transparent;
+	border: 0;
+	font-size: 14px;
+	font-weight: 700;
+	color: rgb(135, 138, 140);
+}
+.right-separate{
+	padding-left:15px;
+	justify-content: center;
 }
 .votes-image {
 	display: flex;
@@ -265,45 +294,61 @@ textarea{
 .main-post {
 	margin-bottom: 6rem;
 }
+.post-title{
+	text-align: left;
+	font-family: IBMPlexSans, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 18px;
+	padding:  0 16px 10px;
+	padding-left: 65px;
+}
 .post-comments {
 	display: flex;
-	padding-left: 150px;
 	padding-bottom: 30px;
+	justify-content: space-between;
+	width:300px;
+	padding-left: 50px;
+}
+.reply-class{
+	padding-top:10px;
+	padding-right: 10px;
 }
 .post-container {
 	background-color: #DAE0E6;
 	padding-left: 40px;
+	
 }
 .votes-container {
 	background-color: #F0F0F0;
-	position: absolute;
 	width: 40px;
 	border-left: 2px thin;
 	padding-left: 5px;
-	height: 527px;
+	padding-top: 10px;
+	height: inherit;
 }
+
 .single-comment-section {
 	display: flex;
-	border-color:black;
+	/* border-color:black;
 	border-style: solid;
-	border-radius: 10px 10px 10px 10px;
-	border-width: thin;
+	border-width: thin; */
+	border-radius: 5px 5px 5px 5px;
 	margin-bottom: 10px;
-	background-color: #DAE0E6;
+	background-color: #E7F3FF;  
+	/* background-color: #DDEFFF; 
+	background-color: #D3F4E6;  */
 	justify-content: space-between;
 	width:500px;
 }
 .input-comment{
 	padding-left: 120px;
 }
-.post-comments{
-	display: flex;
-}
 .community-user{
 	/* background: linear-gradient(to right, grey, grey 10%, transparent 90%, transparent 100%); */
 	/* background: linear-gradient(to right, grey 10%, white 90%);; */
 	display: flex;
-	padding-left: 75px;
+	
 }
 .user-name{
 	padding-left: 10px;
@@ -313,19 +358,26 @@ textarea{
 	padding-right: 20px;
 	color: black;
 }
+.single-post:hover{
+	
+	
+	border: 1px solid #898989
+}
 .single-post{
-	margin-top:50px;
+	margin-bottom: 15px;
 	width: 600px;
+	display: inline-flex;
 	background-color: white;
-	border-radius: 4px;
+	border-radius: 5px;
 	border: 1px solid #ccc;
 }
 .all-posts{
 	background-color: #DAE0E6;
+	padding-top: 20px;
 }
 .comments-section{
-	padding-left: 50px;
-	padding-right: 50px;
+	
+	
 	margin-bottom: 2rem;
 }
 .dropdown {

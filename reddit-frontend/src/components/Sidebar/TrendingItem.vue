@@ -20,7 +20,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #trendingItem {
     align-items: center;
     display: flex;
@@ -40,13 +40,20 @@ export default {
 	display: flex;
 	flex-direction: column;
 	width: 170px;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 16px;
 }
 .vertical {
 	display: block;
 	margin-left: 40px;
 }
 .small {
-	line-height: 10px;
+	line-height: 16px;
+	display: flex;
+	font-size: 12px;
+	font-weight: 400;
+	padding-bottom: 4px;
 }
 .join {
 	background-color: #0079d3;
