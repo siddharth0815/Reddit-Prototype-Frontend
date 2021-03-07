@@ -5,6 +5,11 @@
 		<div class="posts">
 			<div class="post-container">
 				<div class="single-post" :key="post.id" v-for="(post, index) in posts">
+					<div class="votes-container">
+							<button id="upvote-button" @click="vote(post.votes, index, true)">^</button>
+							<p id="votes">{{ post.votes }}</p>
+							<button id="downvote-button" @click="vote(post.votes, index, false)">v</button>
+					</div>
 					<div class="community-user">
 						<div class="community-name">
 							<h5>r/{{post.communityName}}</h5>
@@ -14,22 +19,20 @@
 						</div>
 					</div>
 					<h4>{{ post.contentBody}}</h4>
+					
 					<div class="votes-image">
-						<div class="votes-container">
-							<button id="upvote-button" @click="vote(post.votes, index, true)">^</button>
-							<p id="votes">{{ post.votes }}</p>
-							<button id="downvote-button" @click="vote(post.votes, index, false)">v</button>
-						</div>
 						<div>
 							<img :src="post.imageURL"/>
 						</div>
 					</div>
 					<div class="post-comments">
 						<div id="comment-button">
-							<button v-on:click="displayComments(post, index)">comment</button>
+							<button type = "button" class="button" v-on:click="displayComments(post, index)">comment</button>
 						</div>
 						<div class="dropdown">
-							<button class="dropbtn">react</button>
+							<div id="react-button">
+								<button type="button" class="button">react</button>
+							</div>
 							<div class="dropdown-content">
 								<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
 								<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
@@ -37,18 +40,18 @@
 							</div>
 						</div>
 						<div id="hide-button">
-							<button>hide</button>
+							<button type="button" class="button">hide</button>
 						</div>
 						<div id="report-button">
-							<button>report</button>
+							<button type="button" class="button">report</button>
 						</div>
 					</div>
 					<div v-if="toggle[index] === true" class="comments-section">
 						<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
 							<p id="comment">{{ comment }}</p>
-							<!-- <div>
+							<div>
 								<button id="reply-button">reply</button>
-							</div> -->
+							</div>
 						</div>
 						<div id="comment-box">
 							<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
@@ -164,28 +167,60 @@ textarea{
 #upvote-button{
 	border-radius: 2px;
 }
+#upvote-button:hover{
+	background-color: #D0D0D0;
+}
 #downvote-button{
 	border-radius: 2px;
 }
+#downvote-button:hover{
+	background-color: #D0D0D0;
+}
 #comment-button {
-	padding-right: 20px;
+	padding-right: 0px;
 	border-radius: 2px;
 	color: black;
-	
+}
+#comment-button:hover{
+	background-color: #D0D0D0;
 }
 #react-button {
-	padding-right: 20px;
+	padding-right: 0px;
 	border-radius: 2px;
-	
+	color:black
+}
+#react-button:hover{
+	background-color: #D0D0D0;
 }
 #submit-button{
 	height: 20px;
 }
+#votes{
+	padding-right: 9px;
+}
 #hide-button {
-	padding-right: 20px;
+	padding-right: 0px;
 	border-radius: 2px;
 	border:black;
-	
+}
+#hide-button:hover{
+	background-color: #D0D0D0;
+}
+#react-button {
+	padding-right: 0px;
+	border-radius: 2px;
+	border:black;
+}
+#react-button:hover{
+	background-color: #D0D0D0;
+}
+#report-button {
+	padding-right: 0px;
+	border-radius: 2px;
+	border:black;
+}
+#report-button:hover{
+	background-color: #D0D0D0;
 }
 #comment {
 	padding-right: 20px;
@@ -197,8 +232,14 @@ textarea{
 #reply-button{
 	margin-top: 20px;
 }
+#reply-button:hover{
+	background-color: #D0D0D0;
+}
 .posts {
 	background-color: #d3d3d3;
+}
+.button {
+	background-color: transparent;
 }
 .votes-image {
 	display: flex;
@@ -217,13 +258,12 @@ textarea{
 	padding-left: 40px;
 }
 .votes-container {
-	background-color: #DAE0E6;
-	padding-bottom: 20px;
+	background-color: #F0F0F0;
 	position: absolute;
 	width: 40px;
 	border-left: 2px thin;
 	padding-left: 5px;
-	height: auto;
+	height: 527px;
 }
 .single-comment-section {
 	display: flex;
@@ -243,6 +283,8 @@ textarea{
 	display: flex;
 }
 .community-user{
+	/* background: linear-gradient(to right, grey, grey 10%, transparent 90%, transparent 100%); */
+	/* background: linear-gradient(to right, grey 10%, white 90%);; */
 	display: flex;
 	padding-left: 75px;
 }
@@ -263,7 +305,6 @@ textarea{
 }
 .all-posts{
 	background-color: #DAE0E6;
- 
 }
 .comments-section{
 	padding-left: 50px;
@@ -273,7 +314,7 @@ textarea{
 .dropdown {
 	position: relative;
 	display: inline-block;
-	padding-right: 20px;
+	padding-right: 0px;
 	
 }
 
@@ -307,6 +348,6 @@ textarea{
 
 .dropdown:hover .dropdown-content {display: block;}
 
-.dropdown:hover .dropbtn {background-color:grey;}
+.dropdown:hover .dropbtn {background-color:#D0D0D0;}
 
 </style>
