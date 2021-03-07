@@ -11,7 +11,7 @@
 				<Cards></Cards>
 			</div>
 			<div class="bottom">
-				<Posts @vote="vote" :posts="posts"/>
+				<Posts @vote="vote" :posts="posts" :votedPosts="votedPosts"/>
 				<div class="sidebar">
 					<Sidebar></Sidebar>
 				</div>
@@ -34,11 +34,13 @@ export default {
 		Posts,
 		Sidebar,
 		Cards,
-		Navbar
+		Navbar,
+
 	},
 	data() {
 		return {
 			posts: [],
+			votedPosts: [], 
 		}
 	},
 	methods: {
@@ -46,14 +48,39 @@ export default {
 			const result = await axios
 			.post('http://localhost:8080/api/content/vote/user/'+localStorage.userId+'/content/'+this.posts[index].id+'?add='+add)
 			this.posts[index].votes += result.data;
+			this.posts[index].userVote += result.data;
 			this.emitter.emit('postVote')
 		},
 	},
-	mounted(){
-		console.log("hello mounted app")
-		axios
+	async mounted(){
+		
+		const result = await axios
 		.get('http://localhost:8080/api/content/-1')
-		.then(response=> {this.posts = response.data});
+		this.posts = result.data;
+
+		if(localStorage.isAuthenticated === "true"){
+			
+		const res = await axios
+		.get('http://localhost:8080/api/UserContent/'+localStorage.userId)
+		this.votedPosts = res.data
+
+        const key = "userVote"
+		for(var post in this.posts){
+			console.log(this.posts[post].id)
+				var found = 0;
+				for(var voted in this.votedPosts){
+					if(this.posts[post].id=== this.votedPosts[voted].contentId){
+						this.posts[post][key] = this.votedPosts[voted].votes;
+						found = 1;
+						break;
+					}
+			   }
+			   if(found === 0)
+			   this.posts[post][key] = 0;
+			}
+			
+			console.log(this.posts)
+		}
 	}
 }
 </script>
