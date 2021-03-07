@@ -6,9 +6,9 @@
 			<div class="post-container">
 				<div class="single-post" :key="post.id" v-for="(post, index) in posts">
 					<div class="votes-container">
-							<button id="upvote-button" @click="vote(post.votes, index, true)">^</button>
-							<p id="votes">{{ post.votes }}</p>
-							<button id="downvote-button" @click="vote(post.votes, index, false)">v</button>
+						<button :id="post.userVote===1?'upvoted-button':'upvote-button'" @click="vote(post.votes, index, true)">^</button> 
+						<p id="votes">{{ post.votes }}</p>
+						<button :id="post.userVote===-1?'downvoted-button':'downvote-button'" @click="vote(post.votes, index, false)">v</button>	   
 					</div>
 					<div class="community-user">
 						<div class="community-name">
@@ -74,7 +74,7 @@ import axios from 'axios'
 import LoginModal from '../Modal/LoginModal'
 export default {
 	name: "Posts",
-	props: ['posts'],
+	props: ['posts', 'votedPosts'],
 	components:{
 	 LoginModal
 	},
@@ -133,10 +133,16 @@ export default {
 		},
 		toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
-        },
+		},
+	},
+	mounted(){
 		
-		
+	
+
 	}
+		
+		
+	
 };
 </script>
 
@@ -169,11 +175,19 @@ textarea{
 #upvote-button{
 	border-radius: 2px;
 }
+#upvoted-button{
+	border-radius: 2px;
+	background-color: #ffcccb;
+}
 #upvote-button:hover{
 	background-color: #D0D0D0;
 }
 #downvote-button{
 	border-radius: 2px;
+}
+#downvoted-button{
+	border-radius: 2px;
+	background-color:#87CEEB;
 }
 #downvote-button:hover{
 	background-color: #D0D0D0;
