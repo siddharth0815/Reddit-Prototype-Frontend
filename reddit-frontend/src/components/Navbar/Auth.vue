@@ -86,17 +86,14 @@ export default {
 	},
 	methods: {
 		showLoginModalFunc(value) {
-            if (value)
+            if(value)
                 this.showRegisterModal=!(value);
             this.showLoginModal=value;
-            
-            
-		},
+        },
 		showRegisterModalFunc(value) {
-            if (value)
+            if(value)
                 this.showLoginModal=!(value);
             this.showRegisterModal=value;
-            
 		},
 		handleLogout() {
 			this.isAuthenticated = false;
@@ -104,6 +101,7 @@ export default {
 			localStorage.userName = null;
             localStorage.userId=null;
             alert("Logout Successfull")
+            console.log("HIHIHIHI RINKIYA")
 		},
         toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);

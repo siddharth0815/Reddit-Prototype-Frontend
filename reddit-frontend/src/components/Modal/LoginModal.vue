@@ -33,16 +33,13 @@
             </div>
 		</div>
 	</transition>
-	
 </div>
 </template>
 
 <script>
 import axios from 'axios';
-//import RegisterModal from './RegisterModal'
 
 export default {
-  //components: { RegisterModal },
 	name: 'LoginModal',
 	props: ['showLoginModal','isAuthenticated'],
 	data() {
@@ -73,6 +70,7 @@ export default {
 				localStorage.isAuthenticated = true;
 				localStorage.userName = response.data.userName;
 				localStorage.userId = response.data.id;
+				this.showLoginModalFunc();
 				alert("Login Successfull");
 			}
 			catch(e){
