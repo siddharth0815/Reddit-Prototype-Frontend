@@ -213,6 +213,7 @@ textarea{
 }
 #votes{
 	padding-right: 9px;
+    margin: 2px;
 }
 #hide-button {
 	padding-right: 0px;
