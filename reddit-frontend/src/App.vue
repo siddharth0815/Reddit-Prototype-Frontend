@@ -106,7 +106,6 @@ html, body {
 .sidebar {
 	padding-top: 20px;
 	padding-left: 0px;
-	
 }
 .navbar{
 	background-color: white;
