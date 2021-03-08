@@ -1,6 +1,7 @@
 <template>
 	<div id="topItem">
 		<span class="index"> {{index+1}} </span>
+		<img alt="Subreddit icon" :src="item.iconURL" class="icon">
 		<span class="title"> r/{{item.title}} </span>
 		<div class="small">
 			<button @click="vote(index, true)">^</button>
@@ -39,7 +40,20 @@ export default {
 	color: #1c1c1c;
 	text-align: right;
 	width: 20px;
-	margin-right: 20px;
+	margin-right: 12px;
+}
+.icon {
+	background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 24px;
+    box-sizing: border-box;
+    flex: none;
+    font-size: 32px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 8px;
+    width: 32px;
 }
 .title {
 	display: flex;
@@ -60,9 +74,6 @@ export default {
 	justify-content: center;
 	text-align: center;
 	width: 40px;
-}
-.icon-upvote {
-	content: "\f13d";
 }
 button{
 	border-radius: 2px;

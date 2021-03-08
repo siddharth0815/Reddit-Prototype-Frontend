@@ -1,5 +1,8 @@
 <template>
-	<div id="trendingItem">
+	<div id="trendingItem" style="padding-top: {{getpadding(index)}}px">
+		<div class="icon-container">
+			<img alt="Subreddit icon" :src="item.iconURL" class="icon">
+		</div>
 		<div class="vertical">
 			<span class="title"> r/{{ item.title }} </span>
 			<span class="small"> {{item.members}} members </span>
@@ -15,6 +18,9 @@ export default {
 	methods: {
 		join(id, index) {
 			this.$emit("follow", localStorage.userId, id, index);
+		},
+		getpadding(index) {
+			return ( index == 0 ? 0 : 12 );
 		}
 	}
 }
@@ -23,12 +29,14 @@ export default {
 <style scoped>
 #trendingItem {
     align-items: center;
-    display: flex;
-    height: 48px;
-    padding: 0 12px;
+    display: inline-flex;
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
+}
+.trending-container {
+	display: flex;
+	flex-direction: row;
 }
 .index {
 	color: #1c1c1c;
@@ -39,7 +47,6 @@ export default {
 .title {
 	display: flex;
 	flex-direction: column;
-	width: 170px;
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 16px;
@@ -47,9 +54,19 @@ export default {
 .title:hover{
 	text-decoration: underline;
 }
+.icon {
+	border-radius: 100%;
+    height: 32px;
+    width: 32px;
+}
+.icon-container {
+	height: 32px;
+    width: 32px;
+    margin-right: 10px;
+}
 .vertical {
 	display: block;
-	margin-left: 40px;
+	width: 144px;
 }
 .small {
 	line-height: 16px;
@@ -59,16 +76,20 @@ export default {
 	padding-bottom: 4px;
 }
 .join {
+	font-family: Noto Sans,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    padding: 4px 16px;
+
 	background-color: #0079d3;
 	color: #ffffff;
 	fill: #ffffff;
 	border: none;
     border-radius: 9999px;
     box-sizing: border-box;
-	font-family: Noto Sans, Arial,sans-serif;
-    font-size: 14px;
-    height: 32px;
-    padding: 0 16px;
+    height: 36px;
+	width: 106px;
     align-items: center;
     text-align: center;
 }
