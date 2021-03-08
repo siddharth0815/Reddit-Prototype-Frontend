@@ -44,6 +44,9 @@ export default {
 	font-weight: 500;
 	line-height: 16px;
 }
+.title:hover{
+	text-decoration: underline;
+}
 .vertical {
 	display: block;
 	margin-left: 40px;

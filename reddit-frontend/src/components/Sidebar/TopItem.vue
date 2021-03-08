@@ -64,4 +64,10 @@ export default {
 .icon-upvote {
 	content: "\f13d";
 }
+button{
+	border-radius: 2px;
+}
+button:hover{
+background-color: #D0D0D0;
+}
 </style>

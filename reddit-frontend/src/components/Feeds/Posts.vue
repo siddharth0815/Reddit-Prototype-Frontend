@@ -51,7 +51,10 @@
 							</div>
 							<div v-if="toggle[index] === true" class="comments-section">
 								<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
-									<p id="comment">{{ comment }}</p>
+								  <div class="content-username">	
+									<div class="username">{{comment[1]}}</div>
+									<p id="comment">{{ comment[0]}}</p>
+								   </div>	
 									<div class="reply-class">
 										<button id="reply-button">reply</button>
 									</div>
@@ -79,8 +82,8 @@ export default {
 	},
 	data() {
 		return {
-			toggle: [false, false, false, false, false],
-			commentBox: ["","","","",""],
+			toggle: [],
+			commentBox: [],
 			showLoginModal: false,
 			isAuthenticated: false,
 		};
@@ -103,10 +106,11 @@ export default {
 					contentBody : this.commentBox[index],
 					parentId: post.id,
 				}
+				console.log(localStorage.userId)
 				axios
-				.post("http://localhost:8080/api/content/create/user/77/community/78",requestBody)
+				.post("http://localhost:8080/api/content/create/user/"+localStorage.userId+"/community/"+post.communityId,requestBody)
 				.then(response=>{console.log(response)})
-				post.comments.push(this.commentBox[index]);
+				post.comments.push([this.commentBox[index],localStorage.userName]);
 				this.commentBox[index]="";
 			}
 			else{
@@ -121,7 +125,12 @@ export default {
 			{
 				const resultList = await axios.get('http://localhost:8080/api/content/'+post.id)
 				for (var i in resultList.data)
-					comments.push(resultList.data[i].contentBody);
+				{
+					const commentInfo = [];
+					commentInfo.push(resultList.data[i].contentBody);
+					commentInfo.push(resultList.data[i].userName);
+					comments.push(commentInfo);
+				}
 				post[key]=comments;
 			}
 		},
@@ -134,7 +143,10 @@ export default {
 	},
 	mounted(){
 		
-	
+	   for(var i=0 ;i<this.posts.length;i++){
+		   this.toggle.push(false);
+		   this.commentBox.push("")
+	   }
 
 	}
 		
@@ -150,6 +162,7 @@ p{
 	color:black;
 	padding: 2px;
 	padding-left:10px ;
+	margin-block-start: 0px;
 }
 h4 {
 	text-align: left;
@@ -341,6 +354,19 @@ textarea{
 	justify-content: space-between;
 	width:500px;
 }
+.content-username{
+	/* justify-content: left; */
+}
+.username{
+	text-align: left;
+	padding-left: 10px;
+	padding-top: 5px;
+	font-size: 14px;
+}
+.username:hover{
+	text-decoration: underline;
+}
+
 .input-comment{
 	padding-left: 120px;
 }
@@ -357,6 +383,9 @@ textarea{
 .community-name{
 	padding-right: 20px;
 	color: black;
+}
+.community-name:hover{
+ text-decoration: underline;
 }
 .single-post:hover{
 	
