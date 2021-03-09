@@ -67,6 +67,7 @@ export default {
 			try {
 				const response = await axios.post("http://localhost:8080/user/auth/login",requestBody);
 				this.$emit("toggleIsAuthenticated");
+				console.log(response)
 				localStorage.isAuthenticated = true;
 				localStorage.userName = response.data.userName;
 				localStorage.userId = response.data.id;

@@ -32,13 +32,13 @@
 						</div>
 						<div class="post-comments">
 								<div id="comment-button" v-on:click="displayComments(post, index)">
-									<img class="comment-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCaIEwv0RCQp5-sMmKHDq_gj4jFniOYvXDmg&usqp=CAU"/>
+									<img class="comment-icon" src="https://png.pngtree.com/png-vector/20191027/ourmid/pngtree-comment-icon-isolated-on-background-png-image_1875255.jpg"/>
 									<button type = "button" class="button">Comments</button>
 								</div>
 								<div class="dropdown">
 									<div v-if="post.userReact === 1" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
-										<!-- <p class="react-text">Love</p> -->
+										<!-- <div class="react-text">Love</div> -->
 									</div>
 									<div v-else-if="post.userReact === 2" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
@@ -49,7 +49,7 @@
 										<!-- <p class="react-text">Like</p> -->
 									</div>
 									<div v-else id="react-button">
-										<img class="react-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9kK3FccDIfl4MsL23qYuAaUdulMetBtTT0g&usqp=CAU"/>
+										<img class="react-icon" src="https://icons-for-free.com/iconfiles/png/512/love+one+one+like+icon-1320184042027897906.png"/>
 										<button type="button" class="button">React</button>
 									</div>
 
@@ -60,11 +60,11 @@
 									</div>
 								</div>
 								<div id="hide-button">
-									<img class="hide-icon" src="https://store.flectrahq.com/web/image/griffin.module/127/module_banner?unique=46b59e9"/>
+									<img class="hide-icon" src="https://cdn4.iconfinder.com/data/icons/internet-seccurity-blue-filled-line/32/Internet_Security_disable_hidden_eye_view_hide-512.png"/>
 									<button type="button" class="button">Hide</button>
 								</div>
 								<div id="share-button">
-									<img class="share-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-HW82VrcPBBB2FFMGZ69-dgP5-WkuQAdT3w&usqp=CAU"/>
+									<img class="share-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNV6JlJl6vzpa-VaQyxs9bl6MKtw8qCXCg5g&usqp=CAU"/>
 									<button type="button" class="button">Share</button>
 								</div>
 							</div>
@@ -245,7 +245,7 @@ textarea{
 	color: rgb(135, 138, 140);
 }
 #comment-button:hover{
-	background-color: #D0D0D0;
+	background-color: #ffe6e6;
 }
 
 #react-button {
@@ -256,7 +256,7 @@ textarea{
 	display:flex;
 }
 #react-button:hover{
-	background-color: #D0D0D0;
+	background-color: lightgreen;
 }
 #submit-button{
 	background-color: #0079d3;
@@ -290,7 +290,7 @@ textarea{
 	display: flex;
 }
 #hide-button:hover{
-	background-color: #D0D0D0;
+	background-color: #E7F3FF;
 }
 #react-button {
 	padding-right: 0px;
@@ -298,7 +298,7 @@ textarea{
 	border:black;
 }
 #react-button:hover{
-	background-color: #D0D0D0;
+	background-color: #e6ffe6;
 }
 #share-button {
 	padding-right: 5px;
@@ -308,7 +308,7 @@ textarea{
 	display: flex;
 }
 #share-button:hover{
-	background-color: #D0D0D0;
+	background-color: #FFFF99;
 }
 #comment {
 	padding-right: 20px;
@@ -345,12 +345,12 @@ textarea{
 	padding-bottom: 0px;
 	padding-top: 5px;
 }
-.react-text{
+/* .react-text{
 	padding-left: 0px;
 	padding-top: 15px;
-}
+} */
 .share-icon{
-	height: 25px;
+	height: 23px;
 	width: 30px;
 	padding-bottom: 0px;
 	padding-top: 5px;
@@ -380,12 +380,17 @@ textarea{
 .main-post {
 	margin-bottom: 6rem;
 }
+.react-div{
+	display: flex;
+	padding-right: 6px;
+
+}
 .react-img{
 	height:25px;
 	width:30px;
 	padding-bottom: 0px;
 	padding-left:4px;
-	padding-right:4px;
+	padding-right:10px;
 	padding-top: 5px;
 
 }

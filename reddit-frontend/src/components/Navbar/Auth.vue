@@ -49,7 +49,7 @@
         <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
     </div>
     <div id= "register"  v-if="showRegisterModal===true && isAuthenticated === false" class="modal" >
-        <RegisterModal @showRegisterModalFunc="showRegisterModalFunc" :showRegisterModal="showRegisterModal"> </RegisterModal>
+        <RegisterModal @showRegisterModalFunc="showRegisterModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showRegisterModal="showRegisterModal"> </RegisterModal>
     </div>
 </div>
 </template>
@@ -100,8 +100,9 @@ export default {
 			localStorage.isAuthenticated = false;
 			localStorage.userName = null;
             localStorage.userId=null;
+            this.$emit("react", -1, -1, -1)
             alert("Logout Successfull")
-            console.log("HIHIHIHI RINKIYA")
+            
 		},
         toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);

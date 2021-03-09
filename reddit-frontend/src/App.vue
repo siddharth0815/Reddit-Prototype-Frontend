@@ -1,7 +1,7 @@
 <template>
 	<div id="app">
 		<div class="navbar">
-			<Navbar></Navbar>
+			<Navbar @react="react" ></Navbar>
 		</div>
 		<div class="lower">
 			<div class="cards-container">
@@ -53,12 +53,20 @@ export default {
 			this.emitter.emit('postVote')
 		},
 		async react(postId, reactId, index){
-			console.log("hello react 2")
+			if(reactId!==-1){
 			const result = await axios
 				.post("http://localhost:8080/api/UserContent/react/"+localStorage.userId+"/"+postId+"/"+reactId)
 				console.log(result)
 			if(result)	
 			this.posts[index].userReact = reactId;
+			}
+			else{
+				for (var i in this.posts)
+				{
+					this.posts[i].userReact=0;
+					this.posts[i].userVote=0;
+				}
+			}
 		}
 	},
 	async mounted(){

@@ -76,9 +76,13 @@ export default {
 			}
 			try{
 				const response = await axios.post("http://localhost:8080/user/auth/register",requestBody);
-				console.log(response);
+				this.$emit("toggleIsAuthenticated");
+				localStorage.isAuthenticated = true;
+				localStorage.userName = response.data.userName;
+				localStorage.userId = response.data.id;
 				this.showRegisterModalFunc();
 				alert("Registration Successfull")
+
 			}
 			catch(e) {
 				alert("User Already exists!")
