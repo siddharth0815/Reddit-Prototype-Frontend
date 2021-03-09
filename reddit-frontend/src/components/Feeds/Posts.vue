@@ -31,21 +31,26 @@
 							</div>
 						</div>
 						<div class="post-comments">
-								<div id="comment-button">
-									<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
+								<div id="comment-button" v-on:click="displayComments(post, index)">
+									<img class="comment-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCaIEwv0RCQp5-sMmKHDq_gj4jFniOYvXDmg&usqp=CAU"/>
+									<button type = "button" class="button">Comments</button>
 								</div>
 								<div class="dropdown">
-									<div v-if="post.userReact === 0" id="react-button">
-										<button type="button" class="button">React</button>
-									</div>
-									<div v-else-if="post.userReact === 1" id="react-button">
+									<div v-if="post.userReact === 1" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+										<!-- <p class="react-text">Love</p> -->
 									</div>
-									<div v-else-if="post.userReact === 2" id="react-button">
+									<div v-else-if="post.userReact === 2" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
+										<!-- <p class="react-text">Support</p> -->
 									</div>
-									<div v-else-if="post.userReact === 3" id="react-button">
+									<div v-else-if="post.userReact === 3" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
+										<!-- <p class="react-text">Like</p> -->
+									</div>
+									<div v-else id="react-button">
+										<img class="react-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9kK3FccDIfl4MsL23qYuAaUdulMetBtTT0g&usqp=CAU"/>
+										<button type="button" class="button">React</button>
 									</div>
 
 									<div class="dropdown-content">
@@ -55,10 +60,12 @@
 									</div>
 								</div>
 								<div id="hide-button">
+									<img class="hide-icon" src="https://store.flectrahq.com/web/image/griffin.module/127/module_banner?unique=46b59e9"/>
 									<button type="button" class="button">Hide</button>
 								</div>
-								<div id="report-button">
-									<button type="button" class="button">Report</button>
+								<div id="share-button">
+									<img class="share-icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-HW82VrcPBBB2FFMGZ69-dgP5-WkuQAdT3w&usqp=CAU"/>
+									<button type="button" class="button">Share</button>
 								</div>
 							</div>
 						<div v-if="toggle[index] === true" class="comments-section">
@@ -204,6 +211,8 @@ textarea{
 	height: 50px; 
 	margin-right: 20px;
 }
+
+
 #upvote-button{
 	border-radius: 2px;
 }
@@ -225,17 +234,26 @@ textarea{
 	background-color: #D0D0D0;
 }
 #comment-button {
-	padding-right: 0px;
+	padding-right: 5px;
 	border-radius: 2px;
 	color: black;
+	display: flex;
+	background-color: transparent;
+	border: 0;
+	font-size: 14px;
+	font-weight: 700;
+	color: rgb(135, 138, 140);
 }
 #comment-button:hover{
 	background-color: #D0D0D0;
 }
+
 #react-button {
-	padding-right: 0px;
+	padding-right: 5px;
+	padding-left: 5px;
 	border-radius: 2px;
-	color:black
+	color:black;
+	display:flex;
 }
 #react-button:hover{
 	background-color: #D0D0D0;
@@ -264,9 +282,12 @@ textarea{
     margin: 2px;
 }
 #hide-button {
-	padding-right: 0px;
+	padding-right: 5px;
+	padding-left: 5px;
+	scroll-padding-left: 2px;
 	border-radius: 2px;
 	border:black;
+	display: flex;
 }
 #hide-button:hover{
 	background-color: #D0D0D0;
@@ -279,12 +300,14 @@ textarea{
 #react-button:hover{
 	background-color: #D0D0D0;
 }
-#report-button {
-	padding-right: 0px;
+#share-button {
+	padding-right: 5px;
+	padding-left: 5px;
 	border-radius: 2px;
 	border:black;
+	display: flex;
 }
-#report-button:hover{
+#share-button:hover{
 	background-color: #D0D0D0;
 }
 #comment {
@@ -310,6 +333,35 @@ textarea{
 .posts {
 	background-color: #d3d3d3;
 }
+.react-icon{
+	height: 25px;
+	width: 30px;
+	padding-bottom: 0px;
+	padding-top: 5px;
+}
+.comment-icon{
+	height: 25px;
+	width: 30px;
+	padding-bottom: 0px;
+	padding-top: 5px;
+}
+.react-text{
+	padding-left: 0px;
+	padding-top: 15px;
+}
+.share-icon{
+	height: 25px;
+	width: 30px;
+	padding-bottom: 0px;
+	padding-top: 5px;
+}
+
+.hide-icon{
+	height: 25px;
+	width: 30px;
+	padding-bottom: 0px;
+	padding-top: 5px;
+}
 .button {
 	background-color: transparent;
 	border: 0;
@@ -329,9 +381,13 @@ textarea{
 	margin-bottom: 6rem;
 }
 .react-img{
-	height:30px;
+	height:25px;
 	width:30px;
 	padding-bottom: 0px;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top: 5px;
+
 }
 .post-title{
 	text-align: left;
@@ -353,6 +409,7 @@ textarea{
 	padding-top:10px;
 	padding-right: 10px;
 }
+
 .post-container {
 	background-color: #DAE0E6;
 	padding-left: 40px;
