@@ -11,7 +11,7 @@
 				<Cards></Cards>
 			</div>
 			<div class="bottom">
-				<Posts @vote="vote" :posts="posts" :votedPosts="votedPosts"/>
+				<Posts @vote="vote" @react="react" :posts="posts" :votedPosts="votedPosts"/>
 				<div class="sidebar">
 					<Sidebar></Sidebar>
 				</div>
@@ -41,6 +41,7 @@ export default {
 		return {
 			posts: [],
 			votedPosts: [], 
+			reactedPosts: [],
 		}
 	},
 	methods: {
@@ -51,6 +52,14 @@ export default {
 			this.posts[index].userVote += result.data;
 			this.emitter.emit('postVote')
 		},
+		async react(postId, reactId, index){
+			console.log("hello react 2")
+			const result = await axios
+				.post("http://localhost:8080/api/UserContent/react/"+localStorage.userId+"/"+postId+"/"+reactId)
+				console.log(result)
+			if(result)	
+			this.posts[index].userReact = reactId;
+		}
 	},
 	async mounted(){
 		
@@ -64,19 +73,22 @@ export default {
 		.get('http://localhost:8080/api/UserContent/'+localStorage.userId)
 		this.votedPosts = res.data
 
-        const key = "userVote"
+		const keyVote = "userVote"
+		const keyReact = "userReact"
 		for(var post in this.posts){
 			console.log(this.posts[post].id)
-				var found = 0;
+				var foundVote = 0;
 				for(var voted in this.votedPosts){
 					if(this.posts[post].id=== this.votedPosts[voted].contentId){
-						this.posts[post][key] = this.votedPosts[voted].votes;
-						found = 1;
-						break;
+						this.posts[post][keyVote] = this.votedPosts[voted].votes;
+						this.posts[post][keyReact] = this.votedPosts[voted].reaction;
+						foundVote = 1;
 					}
 			   }
-			   if(found === 0)
-			   this.posts[post][key] = 0;
+			   if(foundVote === 0)
+			   this.posts[post][keyVote] = 0;
+			   if(!this.posts[post][keyReact])
+			   this.posts[post][keyReact] = 0;
 			}
 			console.log(this.posts)
 		}

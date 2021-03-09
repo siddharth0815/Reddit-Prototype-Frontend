@@ -33,13 +33,23 @@
 									<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
 								</div>
 								<div class="dropdown">
-									<div id="react-button">
+									<div v-if="post.userReact === 0" id="react-button">
 										<button type="button" class="button">React</button>
 									</div>
+									<div v-else-if="post.userReact === 1" id="react-button">
+										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+									</div>
+									<div v-else-if="post.userReact === 2" id="react-button">
+										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
+									</div>
+									<div v-else-if="post.userReact === 3" id="react-button">
+										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
+									</div>
+
 									<div class="dropdown-content">
-										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
-										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
-										<img class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
+										<img @click="react(post.id, 1, index)" class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+										<img @click="react(post.id, 2, index)" class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
+										<img @click="react(post.id, 3, index)" class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
 									</div>
 								</div>
 								<div id="hide-button">
@@ -89,6 +99,16 @@ export default {
 		};
 	},
 	methods: {
+		 react(postId, reactId, index){
+			if(localStorage.isAuthenticated === "true") {
+				console.log("hello react")
+				console.log(postId, reactId, index)
+				this.$emit("react", postId, reactId, index)
+			}
+			else {
+				this.showLoginModalFunc()
+			}
+		},
 		vote(votes, index, add) {
 			if(localStorage.isAuthenticated === "true") {
 				this.$emit("vote", votes, index, add)
@@ -307,6 +327,11 @@ textarea{
 .main-post {
 	margin-bottom: 6rem;
 }
+.react-img{
+	height:30px;
+	width:30px;
+	padding-bottom: 0px;
+}
 .post-title{
 	text-align: left;
 	font-family: IBMPlexSans, Arial, sans-serif;
@@ -388,8 +413,6 @@ textarea{
  text-decoration: underline;
 }
 .single-post:hover{
-	
-	
 	border: 1px solid #898989
 }
 .single-post{
@@ -419,9 +442,10 @@ textarea{
 .dropdown-content {
 	display: none;
 	position: absolute;
-	background-color: #f1f1f1;
+	background-color: #E7F3FF;
 	width: 50px;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	border: 5px solid greenyellow;
 	z-index: 1;
 	
 }
@@ -433,15 +457,15 @@ textarea{
 	display: block;
 }
 .reactions{
-	height:25px;
-	width:25px;
+	height:28px;
+	width:28px;
 	justify-content: left;
-	padding-left:10px;
+	padding-left:2px;
 	padding-bottom:10px;
 	padding-top:2px;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {background-color: blue;}
 
 .dropdown:hover .dropdown-content {display: block;}
 
