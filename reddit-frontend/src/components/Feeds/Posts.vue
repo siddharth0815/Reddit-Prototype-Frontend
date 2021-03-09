@@ -6,27 +6,46 @@
 		<div class="posts">
 			<div class="post-container">
 				<div class="single-post" :key="post.id" v-for="(post, index) in posts">
-						
-						<div class="votes-container">
-							<button :id="post.userVote===1?'upvoted-button':'upvote-button'" @click="vote(post.votes, index, true)">^</button> 
-							<p id="votes">{{ post.votes }}</p>
-							<button :id="post.userVote===-1?'downvoted-button':'downvote-button'" @click="vote(post.votes, index, false)">v</button>	   
+					<div class="votes-container">
+						<button :id="post.userVote===1?'upvoted-button':'upvote-button'" @click="vote(post.votes, index, true)">^</button> 
+						<p id="votes">{{ post.votes }}</p>
+						<button :id="post.userVote===-1?'downvoted-button':'downvote-button'" @click="vote(post.votes, index, false)">v</button>	   
+					</div>
+					<div class="right-separate">
+						<div class="community-user">
+							<div>
+								<img alt="Subreddit icon" :src="post.communityIcon" class="icon">
+							</div>
+							<div class="community-name">
+								<h5>r/{{post.communityName}}</h5>
+							</div>
+							<div class="user-name">
+								<h5>Posted by {{post.userName}}</h5>
+							</div>
 						</div>
-						<div class="right-separate">
-							<div class="community-user">
-								<div class="community-name">
-									<h5>r/{{post.communityName}}</h5>
+						<h4>{{ post.contentBody}}</h4>
+						
+						<div class="votes-image">
+							<div>
+								<img :src="post.imageURL"/>
+							</div>
+						</div>
+						<div class="post-comments">
+							<div id="comment-button">
+								<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
+							</div>
+							<div class="dropdown">
+								<div id="react-button">
+									<button type="button" class="button">React</button>
 								</div>
-								<div class="user-name">
-									<h5>Posted by {{post.userName}}</h5>
+								<div class="dropdown-content">
+									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
+									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
 								</div>
 							</div>
-							<h4>{{ post.contentBody}}</h4>
-							
-							<div class="votes-image">
-								<div>
-									<img :src="post.imageURL"/>
-								</div>
+							<div id="hide-button">
+								<button type="button" class="button">Hide</button>
 							</div>
 							<div class="post-comments">
 								<div id="comment-button">
@@ -59,23 +78,23 @@
 									<button type="button" class="button">Report</button>
 								</div>
 							</div>
-							<div v-if="toggle[index] === true" class="comments-section">
-								<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
-								  <div class="content-username">	
-									<div class="username">{{comment[1]}}</div>
-									<p id="comment">{{ comment[0]}}</p>
-								   </div>	
-									<div class="reply-class">
-										<button id="reply-button">reply</button>
-									</div>
-								</div>
-								<div id="comment-box">
-									<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
-									<button id="submit-button" @click="postComment(post,index)">Comment</button>
+						</div>
+						<div v-if="toggle[index] === true" class="comments-section">
+							<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
+								<div class="content-username">	
+								<div class="username">{{comment[1]}}</div>
+								<p id="comment">{{ comment[0]}}</p>
+								</div>	
+								<div class="reply-class">
+									<button id="reply-button">reply</button>
 								</div>
 							</div>
+							<div id="comment-box">
+								<textarea type="text" class="form-control"  v-model.trim="commentBox[index]" placeholder="Enter a comment..."></textarea>
+								<button id="submit-button" @click="postComment(post,index)">Comment</button>
+							</div>
 						</div>
-					
+					</div>
 				</div>
 			</div>
 		</div>
@@ -189,6 +208,9 @@ h4 {
 	margin-bottom: 15px;
 	margin-top: 0px;
 }
+h5 {
+	margin: 0;
+}
 img {
 	height: auto;
 	padding-bottom: 20px;
@@ -289,10 +311,9 @@ textarea{
 #comment-box{
 	display: flex;
 	justify-content: space-between;
-	
 }
 #reply-button{
-	 width: 80px;
+	width: 80px;
     height: 25px;
     border: 1px solid #0079d3;
 	border-radius: 9999px;
@@ -300,8 +321,6 @@ textarea{
     color: #0279d2;
     font-weight: 700;
     padding: 0px 16px;
-
-	
 }
 #reply-button:hover{
 	background-color: #D0D0D0;
@@ -318,11 +337,11 @@ textarea{
 }
 .right-separate{
 	padding-left:15px;
+	padding-top: 8px;
 	justify-content: center;
 }
 .votes-image {
 	display: flex;
-	
 }
 .main-post {
 	margin-bottom: 6rem;
@@ -371,16 +390,13 @@ textarea{
 	/* border-color:black;
 	border-style: solid;
 	border-width: thin; */
-	border-radius: 5px 5px 5px 5px;
+	border-radius: 5px;
 	margin-bottom: 10px;
 	background-color: #E7F3FF;  
 	/* background-color: #DDEFFF; 
 	background-color: #D3F4E6;  */
 	justify-content: space-between;
 	width:500px;
-}
-.content-username{
-	/* justify-content: left; */
 }
 .username{
 	text-align: left;
@@ -396,10 +412,11 @@ textarea{
 	padding-left: 120px;
 }
 .community-user{
-	/* background: linear-gradient(to right, grey, grey 10%, transparent 90%, transparent 100%); */
-	/* background: linear-gradient(to right, grey 10%, white 90%);; */
-	display: flex;
-	
+    display: flex;
+    flex-flow: row nowrap;
+	align-items: center;
+    position: relative;
+	margin: 0 8px 8px;
 }
 .user-name{
 	padding-left: 10px;
@@ -410,7 +427,14 @@ textarea{
 	color: black;
 }
 .community-name:hover{
- text-decoration: underline;
+	text-decoration: underline;
+}
+.icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 4px;
+	border-radius: 100%;
+	padding: 0;
 }
 .single-post:hover{
 	border: 1px solid #898989
@@ -428,15 +452,12 @@ textarea{
 	padding-top: 20px;
 }
 .comments-section{
-	
-	
 	margin-bottom: 2rem;
 }
 .dropdown {
 	position: relative;
 	display: inline-block;
 	padding-right: 0px;
-	
 }
 
 .dropdown-content {
@@ -447,7 +468,6 @@ textarea{
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	border: 5px solid greenyellow;
 	z-index: 1;
-	
 }
 
 .dropdown-content a {

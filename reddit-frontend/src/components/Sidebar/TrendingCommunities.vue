@@ -1,7 +1,8 @@
 <template>
 <div>
 	<div id="trendingCommunities">
-		<ol>
+		<div class="title">Trending Communities</div>
+		<ol class="container">
 			<li class="list" :key="item.id" v-for="(item,index) in communities">
 				<TrendingItem :item="item" :index="index" @follow="follow"></TrendingItem>
 			</li>
@@ -77,7 +78,11 @@ export default {
 	overflow: visible;
 }
 .list {
-	border-bottom: thin solid #edeff1;
+	padding: 12px 0 4px;
+	height: 36px;
+}
+.list:first-child {
+	padding-top: 0;
 }
 li {
 	display: list-item;
@@ -86,5 +91,19 @@ ol {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+}
+.container {
+	padding: 12px;
+}
+.title {
+	font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    line-height: 12px;
+    border-radius: 3px 3px 0 0;
+    display: flex;
+    padding: 0 12px 12px;
+	height: 30px;
+	align-items: flex-end;
 }
 </style>
