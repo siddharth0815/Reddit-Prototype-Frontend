@@ -1,7 +1,7 @@
 <template>
 	<div id="trendingItem" style="padding-top: {{getpadding(index)}}px">
 		<div class="icon-container">
-			<img alt="Subreddit icon" :src="item.iconURL" class="icon">
+			<img alt="icon" :src="item.iconURL" class="icon">
 		</div>
 		<div class="vertical">
 			<span class="title"> r/{{ item.title }} </span>

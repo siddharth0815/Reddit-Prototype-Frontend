@@ -14,7 +14,7 @@
 					<div class="right-separate">
 						<div class="community-user">
 							<div>
-								<img alt="Subreddit icon" :src="post.communityIcon" class="icon">
+								<img alt="icon" :src="post.communityIcon" class="icon">
 							</div>
 							<div class="community-name">
 								<h5>r/{{post.communityName}}</h5>
@@ -31,23 +31,6 @@
 							</div>
 						</div>
 						<div class="post-comments">
-							<div id="comment-button">
-								<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
-							</div>
-							<div class="dropdown">
-								<div id="react-button">
-									<button type="button" class="button">React</button>
-								</div>
-								<div class="dropdown-content">
-									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
-									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
-									<img class="reactions" src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
-								</div>
-							</div>
-							<div id="hide-button">
-								<button type="button" class="button">Hide</button>
-							</div>
-							<div class="post-comments">
 								<div id="comment-button">
 									<button type = "button" class="button" v-on:click="displayComments(post, index)">Comments</button>
 								</div>
@@ -78,7 +61,6 @@
 									<button type="button" class="button">Report</button>
 								</div>
 							</div>
-						</div>
 						<div v-if="toggle[index] === true" class="comments-section">
 							<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
 								<div class="content-username">	
