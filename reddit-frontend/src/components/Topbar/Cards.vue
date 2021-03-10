@@ -23,7 +23,10 @@ export default {
 	mounted() {
 		axios
 		.get("http://localhost:8080/api/content/top?count=4")
-		.then(response => (this.cards = response.data) );
+		.then(response => {
+			this.cards = response.data;
+			console.log(response.data)
+		 });
 	},
 	methods: {
 		bgImage(image) {

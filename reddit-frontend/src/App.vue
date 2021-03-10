@@ -35,7 +35,6 @@ export default {
 		Sidebar,
 		Cards,
 		Navbar,
-
 	},
 	data() {
 		return {

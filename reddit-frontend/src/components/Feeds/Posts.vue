@@ -70,10 +70,13 @@
 							</div>
 						<div v-if="toggle[index] === true" class="comments-section">
 							<div class="single-comment-section" :key="comment.id" v-for="comment in post.comments">
-								<div class="content-username">	
-								<div class="username">{{comment[1]}}</div>
-								<p id="comment">{{ comment[0]}}</p>
-								</div>	
+								<div class="icon-user">
+									<img alt="icon" :src="comment[2]" class="comment-usericon">
+									<div class="content-username">	
+										<div class="username">{{comment[0]}}</div>
+										<p id="comment">{{ comment[1]}}</p>
+									</div>
+								</div>
 								<div class="reply-class">
 									<button id="reply-button">reply</button>
 								</div>
@@ -155,8 +158,9 @@ export default {
 				for (var i in resultList.data)
 				{
 					const commentInfo = [];
-					commentInfo.push(resultList.data[i].contentBody);
 					commentInfo.push(resultList.data[i].userName);
+					commentInfo.push(resultList.data[i].contentBody);
+					commentInfo.push(resultList.data[i].userIcon);
 					comments.push(commentInfo);
 				}
 				post[key]=comments;
@@ -312,6 +316,7 @@ textarea{
 }
 #comment {
 	padding-right: 20px;
+	margin-bottom: 12px;
 }
 #comment-box{
 	display: flex;
@@ -392,7 +397,17 @@ textarea{
 	padding-left:4px;
 	padding-right:10px;
 	padding-top: 5px;
-
+}
+.icon-user {
+	display: flex;
+	align-items: center;
+	margin-left: 10px;
+}
+.comment-usericon {
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	padding: 0;
 }
 .post-title{
 	text-align: left;

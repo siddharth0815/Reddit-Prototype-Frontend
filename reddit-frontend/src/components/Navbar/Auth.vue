@@ -38,9 +38,9 @@
         <div class="buttons" v-if="isAuthenticated===false">
             <button class="login-button" @click="showLoginModalFunc(true)">Log In</button>
             <button class="register-button" @click="showRegisterModalFunc(true)">Sign Up</button>
-            
         </div>
         <div class="buttons" v-else>
+            <img alt="icon" :src="getUserIcon()" class="icon">
             <span class="user-info">Hello, {{ getUserName() }}</span>
             <button class="logout-button" @click="handleLogout()">Logout</button>
         </div>
@@ -102,13 +102,15 @@ export default {
             localStorage.userId=null;
             this.$emit("react", -1, -1, -1)
             alert("Logout Successfull")
-            
 		},
         toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
         },
         getUserName() {
             return localStorage.userName;
+        },
+        getUserIcon() {
+            return localStorage.iconURL;
         }
     }
 }
@@ -257,5 +259,10 @@ img {
     display: inline-flex;
     flex-direction: row;
 }
+.icon {
+	width: 20px;
+	height: 20px;
+	border-radius: 100%;
+	padding: 0;
+}
 </style>
-

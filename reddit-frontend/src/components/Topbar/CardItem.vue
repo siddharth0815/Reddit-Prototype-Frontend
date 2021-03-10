@@ -2,7 +2,10 @@
 <div id="cardItem">
 	<div class="topmost">{{card.userName}}</div>
 	<div class="middle">{{card.contentBody.substr(0,25)}}</div>
-	<div class="bottom">r/{{card.communityName}} and more</div>
+	<div class="bottom">
+		<img alt="icon" :src="card.communityIcon" class="icon">
+		r/{{card.communityName}} and more
+	</div>
 </div>
 </template>
 
@@ -33,8 +36,15 @@ export default {
 .bottom {
 	font-weight: 600;
 	font-size: 12px;
-	margin-left: 20px;
+	margin-left: 10px;
 	padding:0;
 	justify-content: left;
+}
+.icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+	border-radius: 100%;
+	padding: 0;
 }
 </style>
