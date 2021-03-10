@@ -20,13 +20,27 @@ export default {
 			cards: null
 		}
 	},
-	mounted() {
-		axios
-		.get("http://localhost:8080/api/content/top?count=4")
-		.then(response => {
-			this.cards = response.data;
-			console.log(response.data)
-		 });
+	async mounted() {
+		const result = await axios
+		.get("http://localhost:8080/api/content/sorted?count=4&sort=votes,desc");
+		this.cards = result.data;
+
+		this.emitter.on('cardVote', function(diff, postId) {
+			console.log(diff, postId);
+			// for(var index in this.cards){
+			// 	console.log("LOOP",index,this.cards[index].id);
+			// 	if( this.cards[index].id == postId ){
+			// 		console.log("FOUND",index,postId,diff)
+			// 		this.cards[index].votes += diff;
+			// 		if( index > 0 && this.cards[index].votes > this.cards[index-1].votes ){
+			// 			this.emitter.emit('cardRerender');
+			// 		}
+			// 		if( index < 3 && this.cards[index].votes < this.cards[index+1].votes ){
+			// 			this.emitter.emit('cardRerender');
+			// 		}
+			// 	}
+			// }
+		});
 	},
 	methods: {
 		bgImage(image) {

@@ -32,7 +32,7 @@ export default {
 	},
 	mounted() {
 		axios
-		.get('http://localhost:8080/api/community/top?count=5')
+		.get('http://localhost:8080/api/community/sorted?count=5&sort=votes,desc')
 		.then( response => (this.communities = response.data) )
 	},
 	methods: {

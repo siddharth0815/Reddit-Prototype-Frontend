@@ -8,7 +8,7 @@
 				<div>
 					<div class="cards-title">Trending today</div>
 				</div>
-				<Cards></Cards>
+				<Cards :key="cardKey"></Cards>
 			</div>
 			<div class="bottom">
 				<Posts @vote="vote" @react="react" :posts="posts" :votedPosts="votedPosts"/>
@@ -39,8 +39,9 @@ export default {
 	data() {
 		return {
 			posts: [],
-			votedPosts: [], 
+			votedPosts: [],
 			reactedPosts: [],
+			cardKey: 0
 		}
 	},
 	methods: {
@@ -49,7 +50,8 @@ export default {
 			.post('http://localhost:8080/api/content/vote/user/'+localStorage.userId+'/content/'+this.posts[index].id+'?add='+add)
 			this.posts[index].votes += result.data;
 			this.posts[index].userVote += result.data;
-			this.emitter.emit('postVote')
+			this.emitter.emit('postVote');
+			this.emitter.emit('cardVote', result.data, this.posts[index].id);
 		},
 		async react(postId, reactId, index){
 			if(reactId!==-1){
@@ -66,6 +68,9 @@ export default {
 					this.posts[i].userVote=0;
 				}
 			}
+		},
+		cardRerender(){
+			this.cardKey++;
 		}
 	},
 	async mounted(){
@@ -99,6 +104,10 @@ export default {
 			}
 			console.log(this.posts)
 		}
+
+		this.emitter.on('cardRerender', () => {
+			this.cardRerender();
+		});
 	}
 }
 </script>
