@@ -36,18 +36,21 @@
 									<button type = "button" class="button">Comments</button>
 								</div>
 								<div class="dropdown">
-									<div v-if="post.userReact === 1" id="react-div">
-										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+									<div v-if="post.userReact !==0" id="react-div">
+										<img  @click="react(post.id,0,index)" class="react-img"  :src="reactImage(post.userReact)">
 										<!-- <div class="react-text">Love</div> -->
+									</div>
+									<!-- <div v-if="post.userReact === 1" id="react-div">
+										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"/>
+		
 									</div>
 									<div v-else-if="post.userReact === 2" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"/>
-										<!-- <p class="react-text">Support</p> -->
+										
 									</div>
 									<div v-else-if="post.userReact === 3" id="react-div">
 										<img  @click="react(post.id,0,index)" class="react-img"  src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"/>
-										<!-- <p class="react-text">Like</p> -->
-									</div>
+									</div> -->
 									<div v-else id="react-button">
 										<img class="react-icon" src="https://icons-for-free.com/iconfiles/png/512/love+one+one+like+icon-1320184042027897906.png"/>
 										<button type="button" class="button">React</button>
@@ -119,6 +122,16 @@ export default {
 			else {
 				this.emitter.emit("LoginModal", true)
 			}
+		},
+		reactImage(reactId){
+			console.log(reactId)
+			 switch(reactId){
+				 case 1: return "https://static-exp1.licdn.com/sc/h/7fx9nkd7mx8avdpqm5hqcbi97"
+				 case 2: return "https://static-exp1.licdn.com/sc/h/54ivsuv8nxk12frsw45evxn3r"
+				 case 3: return "https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb"
+				 default:
+					 return ""
+			 }
 		},
 		vote(votes, index, add) {
 			if(localStorage.isAuthenticated === "true") {
@@ -260,6 +273,7 @@ textarea{
 	border-radius: 2px;
 	color:black;
 	display:flex;
+	width: 100%;
 }
 #react-button:hover{
 	background-color: lightgreen;
@@ -521,6 +535,7 @@ textarea{
 	position: relative;
 	display: inline-block;
 	padding-right: 0px;
+	width: 100%;
 }
 
 .dropdown-content {
