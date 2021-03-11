@@ -136,12 +136,13 @@ export default {
 				const requestBody = {
 					contentBody : this.commentBox[index],
 					parentId: post.id,
+					votes: -1000
 				}
 				console.log(localStorage.userId)
 				axios
 				.post("http://localhost:8080/api/content/create/user/"+localStorage.userId+"/community/"+post.communityId,requestBody)
 				.then(response=>{console.log(response)})
-				post.comments.push([this.commentBox[index],localStorage.userName]);
+				post.comments.push([localStorage.userName, this.commentBox[index], localStorage.iconURL]);
 				this.commentBox[index]="";
 			}
 			else{
