@@ -21,18 +21,22 @@
 					<label class="label">Email</label>
 					<input type="email" v-model="registerEmail" class="input">
 				</div>
+				<div class="field">
+					<label class="label">Profile pic</label>
+					<input type="text" v-model="registerProfilePic" class="input">
+				</div>
 				<!-- submit button -->
 				<div class="submit-button">
 					<button type="submit" class="button is-danger" @click="registerSubmit" >Submit</button>
 				</div>
 			</form>
-			<button class="button" @click="showRegisterModalFunc()">Close</button>
+			<button class="button" @click="closeRegisterModal()">Close</button>
 			<div class="bottom-linetext">
                 <div class="normal-text">
                   <p>Already a redditor?</p>
                 </div>
                 <div class="link-text">
-                    <a href=# @click="showLoginModalFunc(true)">Login</a>
+                    <a href=# @click="showLoginModal()">Login</a>
                 </div>
             </div>
 		</div>
@@ -54,33 +58,35 @@ export default {
 			registerUsername: null,
 			registerPassword: null,
 			registerEmail: null,
+			registerProfilePic: null,
 		
 			isAuthenticated: false,
 		}
 	},
 	methods: {
-		showRegisterModalFunc() {
-			this.showModal = false
-			console.log("child")
-			this.$emit("showRegisterModalFunc",false)
+		closeRegisterModal() {
+			this.emitter.emit("RegisterModal",false)
 		},
-		showLoginModalFunc(){
-		  this.emitter.emit("LoginModal")
+		showLoginModal(){
+		  this.emitter.emit("LoginModal",true)
 		},
 		async registerSubmit() {
 			const requestBody = {
 				userName: this.registerUsername,
 				password: this.registerPassword,
 				email: this.registerEmail,
+				iconURL: this.registerProfilePic,
 				active: true,
 			}
 			try{
 				const response = await axios.post("http://localhost:8080/user/auth/register",requestBody);
 				this.$emit("toggleIsAuthenticated");
+				console.log(response.data)
 				localStorage.isAuthenticated = true;
 				localStorage.userName = response.data.userName;
 				localStorage.userId = response.data.id;
-				this.showRegisterModalFunc();
+				localStorage.iconURL = response.data.iconURL;
+				this.showRegisterModal();
 				alert("Registration Successfull")
 
 			}

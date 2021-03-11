@@ -22,13 +22,13 @@
 					<button type="submit" class="button is-danger" @click="loginSubmit">Submit</button>
 				</div>
 			</form>
-			<button class="button" @click="showLoginModalFunc()">Close</button>
+			<button class="button" @click="closeLoginModal()">Close</button>
 			<div class="bottom-linetext">
                 <div class="normal-text">
                   <p>Already a redditor?</p>
                 </div>
                 <div class="link-text">
-                    <a href=# @click="showRegisterModalFunc()">Sign Up</a>
+                    <a href=# @click="showRegisterModal()">Sign Up</a>
                 </div>
             </div>
 		</div>
@@ -51,13 +51,11 @@ export default {
 		}
 	},
 	methods:{
-		showLoginModalFunc() {
-			console.log("hello login")
-			this.showModal = false
-			this.$emit("showLoginModalFunc",false)
+		closeLoginModal(){
+          this.emitter.emit("LoginModal",false)
 		},
-		showRegisterModalFunc(){
-		   this.emitter.emit("RegisterModal")
+		showRegisterModal(){
+		   this.emitter.emit("RegisterModal",true)
 		},
 		async loginSubmit() {
 			const requestBody = {
@@ -72,8 +70,8 @@ export default {
 				localStorage.userName = response.data.userName;
 				localStorage.userId = response.data.id;
 				localStorage.iconURL = response.data.iconURL;
-				this.showLoginModalFunc();
-				alert("Login Successfull");
+				this.closeLoginModal();
+				alert("Login Successful");
 			}
 			catch(e){
 				alert("Invalid Credentials"+e);

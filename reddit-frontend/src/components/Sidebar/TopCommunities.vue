@@ -26,8 +26,6 @@ export default {
 	data() {
 		return {
 			communities: null,
-			showLoginModal: false,
-			isAuthenticated: false,
 		}
 	},
 	mounted() {
@@ -53,15 +51,9 @@ export default {
 				}
 			}
 			else {
-				this.showLoginModalFunc()
+				this.emitter.emit("LoginModal",true)
 			}
 		},
-		showLoginModalFunc() {
-			this.emitter.emit("LoginModal")
-		},
-		toggleIsAuthenticated() {
-            this.isAuthenticated = !(this.isAuthenticated);
-        },
 		
 
 	}

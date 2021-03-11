@@ -46,10 +46,10 @@
         </div>
     </div>
     <div id= "login" v-if="showLoginModal===true && isAuthenticated === false" class="modal">
-        <LoginModal @showLoginModalFunc="showLoginModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
+        <LoginModal  @toggleIsAuthenticated="toggleIsAuthenticated" :showLoginModal="showLoginModal" :isAuthenticated="isAuthenticated"> </LoginModal>
     </div>
     <div id= "register"  v-if="showRegisterModal===true && isAuthenticated === false" class="modal" >
-        <RegisterModal @showRegisterModalFunc="showRegisterModalFunc" @toggleIsAuthenticated="toggleIsAuthenticated" :showRegisterModal="showRegisterModal"> </RegisterModal>
+        <RegisterModal  @toggleIsAuthenticated="toggleIsAuthenticated" :showRegisterModal="showRegisterModal"> </RegisterModal>
     </div>
 </div>
 </template>
@@ -77,11 +77,11 @@ export default {
 		if(localStorage.isAuthenticated != null) {
 			this.isAuthenticated = localStorage.isAuthenticated == "true"
         }
-        this.emitter.on('RegisterModal', () => {
-			this.showRegisterModalFunc(true);
+        this.emitter.on('RegisterModal', (value) => {
+			this.showRegisterModalFunc(value);
         });
-        this.emitter.on('LoginModal', () => {
-			this.showLoginModalFunc(true);
+        this.emitter.on('LoginModal', (value) => {
+			this.showLoginModalFunc(value);
 		});
 	},
 	methods: {

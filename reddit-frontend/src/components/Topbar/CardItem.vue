@@ -39,6 +39,7 @@ export default {
 	margin-left: 10px;
 	padding:0;
 	justify-content: left;
+	background-color: transparent ;
 }
 .icon {
 	width: 20px;

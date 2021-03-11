@@ -132,6 +132,7 @@ html, body {
 	justify-content: center;
 	padding-left:165px;
 	padding-right:250px;
+	background:	#DAE0E6;
 }
 .sidebar {
 	padding-top: 20px;

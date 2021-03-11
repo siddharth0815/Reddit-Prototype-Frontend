@@ -117,7 +117,7 @@ export default {
 				this.$emit("react", postId, reactId, index)
 			}
 			else {
-				this.showLoginModalFunc()
+				this.emitter.emit("LoginModal", true)
 			}
 		},
 		vote(votes, index, add) {
@@ -125,12 +125,12 @@ export default {
 				this.$emit("vote", votes, index, add)
 			}
 			else {
-				this.showLoginModalFunc()
+				this.emitter.emit("LoginModal", true)
 			}
 		},
 		postComment(post,index){
 			if(localStorage.isAuthenticated !== "true"){
-				this.showLoginModalFunc()
+				this.emitter.emit("LoginModal", true)
 			}
 			else if(this.commentBox[index]){
 				const requestBody = {
@@ -167,9 +167,6 @@ export default {
 				}
 				post[key]=comments;
 			}
-		},
-		showLoginModalFunc() {
-			this.emitter.emit("LoginModal")
 		},
 		toggleIsAuthenticated() {
             this.isAuthenticated = !(this.isAuthenticated);
@@ -322,6 +319,7 @@ textarea{
 #comment {
 	padding-right: 20px;
 	margin-bottom: 12px;
+	font-weight: normal;
 }
 #comment-box{
 	display: flex;
@@ -467,6 +465,7 @@ textarea{
 	padding-left: 10px;
 	padding-top: 5px;
 	font-size: 14px;
+	font-weight:700;
 }
 .username:hover{
 	text-decoration: underline;
