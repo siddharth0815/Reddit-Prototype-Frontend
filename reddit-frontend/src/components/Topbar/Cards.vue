@@ -25,21 +25,27 @@ export default {
 		.get("http://localhost:8080/api/content/sorted?count=4&sort=votes,desc");
 		this.cards = result.data;
 
-		this.emitter.on('cardVote', function(diff, postId) {
-			console.log(diff, postId);
-			// for(var index in this.cards){
-			// 	console.log("LOOP",index,this.cards[index].id);
-			// 	if( this.cards[index].id == postId ){
-			// 		console.log("FOUND",index,postId,diff)
-			// 		this.cards[index].votes += diff;
-			// 		if( index > 0 && this.cards[index].votes > this.cards[index-1].votes ){
-			// 			this.emitter.emit('cardRerender');
-			// 		}
-			// 		if( index < 3 && this.cards[index].votes < this.cards[index+1].votes ){
-			// 			this.emitter.emit('cardRerender');
-			// 		}
-			// 	}
-			// }
+		this.emitter.on('cardVote', (args) => {
+			const postId = args.postId;
+			const postVotes = args.postVotes;
+			var found = 0;
+			for(var index=0;index<this.cards.length;index++){
+				if( this.cards[index].id == postId ){
+					found = 1;
+					this.cards[index].votes = postVotes;
+					if( index > 0 && this.cards[index].votes > this.cards[index-1].votes ){
+						this.emitter.emit('cardRerender');
+					}
+					if( index < 3 && this.cards[index].votes < this.cards[index+1].votes ){
+						this.emitter.emit('cardRerender');
+					}
+					return;
+				}
+			}
+			if( found == 0 ){
+				if( this.cards[3].votes < postVotes )
+					this.emitter.emit('cardRerender');
+			}
 		});
 	},
 	methods: {

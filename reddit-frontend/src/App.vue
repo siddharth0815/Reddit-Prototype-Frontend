@@ -51,7 +51,7 @@ export default {
 			this.posts[index].votes += result.data;
 			this.posts[index].userVote += result.data;
 			this.emitter.emit('postVote');
-			this.emitter.emit('cardVote', result.data, this.posts[index].id);
+			this.emitter.emit('cardVote', { postId : this.posts[index].id, postVotes : this.posts[index].votes } );
 		},
 		async react(postId, reactId, index){
 			if(reactId!==-1){
