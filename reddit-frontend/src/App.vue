@@ -115,7 +115,8 @@ export default {
 <style >
 html, body {
   margin: 0px !important;
-  padding: 0px !important;
+  padding: 0px !important;  
+
 }
 #app {
 	font-family: IBMPlexSans, Arial, sans-serif;
@@ -123,6 +124,7 @@ html, body {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
+	height: 100vh;
 	background:	#DAE0E6;
 }
 .bottom {
