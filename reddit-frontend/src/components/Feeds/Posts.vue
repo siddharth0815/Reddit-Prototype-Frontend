@@ -161,6 +161,7 @@ export default {
 					commentInfo.push(resultList.data[i].userName);
 					commentInfo.push(resultList.data[i].contentBody);
 					commentInfo.push(resultList.data[i].userIcon);
+					console.log("COMMENT-INFO",commentInfo);
 					comments.push(commentInfo);
 				}
 				post[key]=comments;
